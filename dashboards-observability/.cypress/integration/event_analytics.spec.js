@@ -616,3 +616,24 @@ describe('Renders data view', () => {
     cy.get('[data-test-subj="workspace__dataTable"]').should('not.exist');
   });
 });
+
+describe('Renders Tree Map', () => {
+  beforeEach(() => {
+    landOnEventVisualizations();
+  });
+
+  it.only('Renders Tree Map', () => {
+    querySearch(TEST_QUERIES[3].query, TEST_QUERIES[3].dateRangeDOM);
+    cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').type('Tree Map').type('{enter}');
+    cy.get('#configPanel__panelOptions .euiFieldText').click().type('Tree Map');
+    cy.get('.euiFlexItem .euiFormRow [placeholder="Description"]').click().type('This is the description for Tree Map');
+    cy.get('.euiComboBox__inputWrap.euiComboBox__inputWrap-isClearable').eq(0).click();
+    cy.get('.euiFormControlLayoutIcons [data-test-subj ="comboBoxToggleListButton"]').eq(1).click();
+    cy.get('.euiComboBoxOption__content').eq(0).click();
+    cy.get('.euiFormControlLayoutIcons [data-test-subj ="comboBoxToggleListButton"]').eq(2).click();
+    cy.get('.euiComboBoxOption__content').eq(0).click();
+    cy.get('.euiFormControlLayoutIcons [data-test-subj ="comboBoxToggleListButton"]').eq(3).click();
+    cy.get('.euiComboBoxOption__content').eq(0).click();
+    cy.get('.euiFlexItem.euiFlexItem--flexGrowZero .euiButton__text').eq(2).click();
+  });
+});

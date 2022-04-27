@@ -21,7 +21,7 @@ export const TEST_QUERIES = [
     query: 'source = opensearch_dashboards_sample_data_logs'
   },
   {
-    query: 'source = opensearch_dashboards_sample_data_logs | stats count() by host',
+    query: 'source=opensearch_dashboards_sample_data_flights | stats avg(FlightDelayMin), sum(FlightDelayMin) by DestCountry, DestCityName',
     dateRangeDOM: YEAR_TO_DATE_DOM_ID
   },
   {

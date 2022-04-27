@@ -681,7 +681,7 @@ describe('Renders Tree Map', () => {
     cy.get('.euiComboBox__inputWrap.euiComboBox__inputWrap-isClearable').eq(3).should('have.value', '');
   });
 
-  it.only('Renders Tree Map and Save Visulization', () => {
+  it('Renders Tree Map and Save Visulization', () => {
     querySearch(TEST_QUERIES[3].query, TEST_QUERIES[3].dateRangeDOM);
     cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').type('Tree Map').type('{enter}');
     cy.get('#configPanel__panelOptions .euiFieldText').click().type('Tree Map');
@@ -698,7 +698,7 @@ describe('Renders Tree Map', () => {
   });
 
 
-  it.only('Delete All the Random Created Visulization Gauge Chart', () => {
+  it('Delete All the Random Created Visulization Gauge Chart', () => {
     deleteVisulaization();
   });
 });

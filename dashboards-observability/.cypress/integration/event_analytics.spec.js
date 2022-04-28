@@ -639,6 +639,10 @@ describe('Renders data view', () => {
     cy.get('[data-test-subj="workspace__dataTableViewSwitch"]').click();
     cy.get('[data-test-subj="workspace__dataTable"]').should('not.exist');
   });
+<<<<<<< HEAD
+=======
+});
+>>>>>>> 76d8288d24adf75a55efaf45ad0b4f866810fffb
 
 describe('Renders Tree Map', () => {
   beforeEach(() => {
@@ -696,6 +700,10 @@ describe('Renders Tree Map', () => {
     saveVisulizationAndVerify();
   });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 76d8288d24adf75a55efaf45ad0b4f866810fffb
   it('Delete All the Random Created Visulization Gauge Chart', () => {
     deleteVisulaization();
   });

@@ -639,7 +639,6 @@ describe('Renders data view', () => {
     cy.get('[data-test-subj="workspace__dataTableViewSwitch"]').click();
     cy.get('[data-test-subj="workspace__dataTable"]').should('not.exist');
   });
-});
 
 describe('Renders Tree Map', () => {
   beforeEach(() => {
@@ -696,7 +695,6 @@ describe('Renders Tree Map', () => {
     cy.get('.euiFlexItem.euiFlexItem--flexGrowZero .euiButton__text').eq(2).click();
     saveVisulizationAndVerify();
   });
-
 
   it('Delete All the Random Created Visulization Gauge Chart', () => {
     deleteVisulaization();

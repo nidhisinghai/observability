@@ -10,3 +10,6 @@ export { ConfigDataLinks } from './config_data_links';
 export { ConfigThresholds } from './config_thresholds';
 export { ConfigText } from './config_text';
 export { ConfigGaugeValueOptions } from './config_gauge_options';
+export { HeatmapColorPalettePicker } from './config_heatmap_color_palette_picker';
+export { SingleColorPicker } from './config_single_color_picker';
+export { PanelItem } from './config_panel_item';

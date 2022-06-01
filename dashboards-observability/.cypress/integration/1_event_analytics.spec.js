@@ -621,20 +621,17 @@ describe('Renders data view', () => {
 describe('Renders heatmap chart for Chart Style', () => {
   beforeEach(() => {
     landOnEventVisualizations();
-  });
-
-  it('Renders heatmap chart with default Color Mode and Scheme', () => {
     querySearch(TEST_QUERIES[4].query, TEST_QUERIES[4].dateRangeDOM);
     cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').click();
     cy.get('[data-test-subj="comboBoxOptionsList "] button span').contains('Heatmap').click();
+  });
+
+  it('Renders heatmap chart with default Color Mode and Scheme', () => {
     cy.get('.ewdrag.drag.cursor-ew-resize').should('be.visible');
     cy.get('g.g-gtitle text[data-unformatted|="avg(bytes)"]').should('exist');
   });
 
   it('Renders heatmap chart with default Chart Style and Z-axis count()', () => {
-    querySearch(TEST_QUERIES[4].query, TEST_QUERIES[4].dateRangeDOM);
-    cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').click();
-    cy.get('[data-test-subj="comboBoxOptionsList "] button span').contains('Heatmap').click();
     cy.get('#configPanel__value_options [data-test-subj="comboBoxInput"]').click();
     cy.get('[data-test-subj="comboBoxOptionsList "] button span').contains('count()').click();
     cy.get('[data-test-subj="visualizeEditorRenderButton"]').click();
@@ -643,9 +640,6 @@ describe('Renders heatmap chart for Chart Style', () => {
   });
 
   it('Renders heatmap chart with default Chart Style and Z-axis avg(bytes)', () => {
-    querySearch(TEST_QUERIES[4].query, TEST_QUERIES[4].dateRangeDOM);
-    cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').click();
-    cy.get('[data-test-subj="comboBoxOptionsList "] button span').contains('Heatmap').click();
     cy.get('#configPanel__value_options [data-test-subj="comboBoxInput"]').click();
     cy.get('[data-test-subj="comboBoxOptionsList "] button span').contains('avg(bytes)').click();
     cy.get('[data-test-subj="visualizeEditorRenderButton"]').click();
@@ -654,9 +648,6 @@ describe('Renders heatmap chart for Chart Style', () => {
   });
 
   it('Renders heatmap chart and Verify if Color Mode is Spectrum then by default Scheme is Reds', () => {
-    querySearch(TEST_QUERIES[4].query, TEST_QUERIES[4].dateRangeDOM);
-    cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').click();
-    cy.get('[data-test-subj="comboBoxOptionsList "] button span').contains('Heatmap').click();
     cy.get('[data-test-subj="comboBoxInput"]').eq(2).should('contain','Spectrum');
     cy.get('[aria-haspopup="true"]').eq(1).should('contain','Reds');
     cy.get('stop[stop-color="rgb(178, 10, 28)"]').should('exist');
@@ -664,9 +655,6 @@ describe('Renders heatmap chart for Chart Style', () => {
   });
 
   it('Renders heatmap chart and Verify if Color Mode is opacity then by default Scheme is Color', () => {
-    querySearch(TEST_QUERIES[4].query, TEST_QUERIES[4].dateRangeDOM);
-    cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').click();
-    cy.get('[data-test-subj="comboBoxOptionsList "] button span').contains('Heatmap').click();
     cy.get('[data-test-subj="comboBoxInput"]').eq(2).click();
     cy.get('.euiComboBoxOption__content').contains('opacity').click();
     cy.get('.euiTitle.euiTitle--xxsmall').eq(2).should('contain','Color');
@@ -675,9 +663,6 @@ describe('Renders heatmap chart for Chart Style', () => {
   });
 
   it('Renders heatmap chart for Color Mode Spectrum and  Change color of Scheme', () => {
-    querySearch(TEST_QUERIES[4].query, TEST_QUERIES[4].dateRangeDOM);
-    cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').click();
-    cy.get('[data-test-subj="comboBoxOptionsList "] button span').contains('Heatmap').click();
     cy.get('[aria-haspopup="true"]').eq(1).click();
     cy.get('.euiColorPalettePicker__itemTitle').contains('Red-Blue').click();
     cy.get('[data-test-subj="visualizeEditorRenderButton"]').click();
@@ -686,9 +671,6 @@ describe('Renders heatmap chart for Chart Style', () => {
   });
 
   it('Renders heatmap chart for Color Mode opacity and Change color', () => {
-    querySearch(TEST_QUERIES[4].query, TEST_QUERIES[4].dateRangeDOM);
-    cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').click();
-    cy.get('[data-test-subj="comboBoxOptionsList "] button span').contains('Heatmap').click();
     cy.get('[data-test-subj="comboBoxInput"]').eq(2).click();
     cy.get('.euiComboBoxOption__content').contains('opacity').click();
     cy.get('[data-test-subj="euiColorPickerAnchor"]').click();

@@ -176,7 +176,7 @@ describe('Testing traces Spans table verify table headers functionality', () => 
     setTimeFilter();
   });
 
-  it('Renders the spans table and verify coloums headers', () => {
+  it('Renders the spans table and verify columns headers', () => {
     cy.contains(' (8)').should('exist');
     cy.contains('analytics-service, frontend-client, recommendation').should('exist');
     cy.get('.euiLink.euiLink--primary').contains('authentication').should('exist').click();

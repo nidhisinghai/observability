@@ -37,24 +37,22 @@ const moveToTestPanel = () => {
   cy.get('h1').contains(TEST_PANEL).should('exist');
   cy.wait(delay);
 };
-var i=1;
-const panel_name='TestPanel';
+let i = 1;
+const panelName='TestPanel';
 const createDummyPanel = () => {
   moveToPanelHome();
   cy.get('.euiButton__text').contains('Create panel').trigger('mouseover').click();
   cy.wait(delay);
-  cy.get('input.euiFieldText').focus().type(panel_name+i, {
-    delay: 50,
-  });
+  cy.get('input.euiFieldText').focus().type(panelName+i);
   cy.get('.euiButton__text')
     .contains(/^Create$/)
     .trigger('mouseover')
     .click();
   cy.wait(delay);
-  cy.contains(panel_name).should('exist');
+  cy.contains(panelName).should('exist');
   cy.get('.euiBreadcrumb').contains('Operational panels').trigger('mouseover').click();
   cy.wait(delay);
-  i=i+1;
+  i = i+1;
 };
 
 const deletePanel = () => {
@@ -598,8 +596,8 @@ describe('Clean up all test data', () => {
 
 describe('Verify Operational Panels Table', () =>{
   it('Add Dummy Data to Operational Panel and verify Table Column, Pagination and Rows Data ', () => {
-  var i = 0;
-  for (i = 0; i < 12 ; i++) { 
+  let p = 0;
+  for (p = 0; p < 12 ; p++) { 
   createDummyPanel(); }
   cy.get('.euiTableCellContent__text').contains('Name').should('exist');
   cy.get('.euiTableCellContent__text').contains('Last updated').should('exist');
@@ -619,8 +617,8 @@ describe('Verify Operational Panels Table', () =>{
     let total=row.length-1;
     expect(total).to.equal(expected_row_count);
   })
-  var y=0;
-  for (y=0;y<2;y++){
+  let y = 0;
+  for (y = 0; y < 2; y++){
     deletePanel();
   }
 });

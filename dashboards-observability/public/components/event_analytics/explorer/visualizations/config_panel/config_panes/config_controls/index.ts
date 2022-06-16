@@ -12,3 +12,4 @@ export { ConfigText } from './config_text';
 export { ConfigGaugeValueOptions } from './config_gauge_options';
 export { ColorPalettePicker } from './config_color_palette_picker';
 export { ConfigLegend } from './config_legend';
+export { ConfigGraphStyle } from './config_graph_style'

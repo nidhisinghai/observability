@@ -11,5 +11,6 @@ export { ConfigThresholds } from './config_thresholds';
 export { ConfigText } from './config_text';
 export { ConfigGaugeValueOptions } from './config_gauge_options';
 export { ColorPalettePicker } from './config_color_palette_picker';
+export { ConfigChartStyles } from './config_chart_styles';
 export { ConfigLegend } from './config_legend';
 export { ConfigGraphStyle } from './config_graph_style'

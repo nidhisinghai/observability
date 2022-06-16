@@ -37,13 +37,13 @@ const moveToTestPanel = () => {
   cy.get('h1').contains(TEST_PANEL).should('exist');
   cy.wait(delay);
 };
-let i = 1;
+let panelCount = 1;
 const panelName='TestPanel';
 const createDummyPanel = () => {
   moveToPanelHome();
   cy.get('.euiButton__text').contains('Create panel').trigger('mouseover').click();
   cy.wait(delay);
-  cy.get('input.euiFieldText').focus().type(panelName+i);
+  cy.get('input.euiFieldText').focus().type(panelName+panelCount);
   cy.get('.euiButton__text')
     .contains(/^Create$/)
     .trigger('mouseover')
@@ -52,7 +52,7 @@ const createDummyPanel = () => {
   cy.contains(panelName).should('exist');
   cy.get('.euiBreadcrumb').contains('Operational panels').trigger('mouseover').click();
   cy.wait(delay);
-  i = i+1;
+  panelCount++;
 };
 
 const deletePanel = () => {
@@ -131,9 +131,7 @@ describe('Creating visualizations', () => {
 });
 
 describe('Testing Operational Panel Home', ()=>{
-   beforeEach(() => {
-    moveToPanelHome();
-   });
+   beforeEach(() => moveToPanelHome());
 
    it('Operational Panels Empty Home Page', () =>{
      cy.get('.euiTitle.euiTitle--small').contains('Panels (0)');
@@ -596,9 +594,9 @@ describe('Clean up all test data', () => {
 
 describe('Verify Operational Panels Table', () =>{
   it('Add Dummy Data to Operational Panel and verify Table Column, Pagination and Rows Data ', () => {
-  let p = 0;
-  for (p = 0; p < 12 ; p++) { 
-  createDummyPanel(); }
+  for (let p = 0; p < 15 ; p++) { 
+  createDummyPanel(); 
+  }
   cy.get('.euiTableCellContent__text').contains('Name').should('exist');
   cy.get('.euiTableCellContent__text').contains('Last updated').should('exist');
   cy.get('.euiTableCellContent__text').contains('Created').should('exist');
@@ -614,11 +612,10 @@ describe('Verify Operational Panels Table', () =>{
   cy.get('.euiTable--auto')
   .find("tr")
   .then((row) => {
-    let total=row.length-1;
+    let total = row.length-1;
     expect(total).to.equal(expected_row_count);
   })
-  let y = 0;
-  for (y = 0; y < 2; y++){
+  for (let y = 0; y < 2; y++){
     deletePanel();
   }
 });

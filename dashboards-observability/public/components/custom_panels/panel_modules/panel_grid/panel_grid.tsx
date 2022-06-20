@@ -27,6 +27,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
  * http: http core service;
  * chrome: chrome core service;
  * panelId: OpenPanel Id
+ * updateAvailabilityVizId: function to update application if availabilityViz is removed from panel
  * panelVisualizations: list of panel visualizations
  * setPanelVisualizations: function to set panel visualizations
  * editMode: boolean to check if the panel is in edit mode
@@ -44,6 +45,7 @@ interface PanelGridProps {
   http: CoreStart['http'];
   chrome: CoreStart['chrome'];
   panelId: string;
+  updateAvailabilityVizId?: any;
   panelVisualizations: VisualizationType[];
   setPanelVisualizations: React.Dispatch<React.SetStateAction<VisualizationType[]>>;
   editMode: boolean;
@@ -64,6 +66,7 @@ export const PanelGrid = (props: PanelGridProps) => {
     http,
     chrome,
     panelId,
+    updateAvailabilityVizId,
     panelVisualizations,
     setPanelVisualizations,
     editMode,
@@ -166,6 +169,9 @@ export const PanelGrid = (props: PanelGridProps) => {
         _.omit(layout, ['static', 'moved'])
       );
       saveVisualizationLayouts(panelId, visualizationParams);
+      if (updateAvailabilityVizId) {
+        updateAvailabilityVizId(panelVisualizations);
+      }
     }
   }, [editActionType]);
 

@@ -10,12 +10,14 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
           "defaultAxes": Object {
             "xaxis": Array [
               Object {
+                "label": "Carrier",
                 "name": "Carrier",
                 "type": "keyword",
               },
             ],
             "yaxis": Array [
               Object {
+                "label": "avg(FlightDelayMin)",
                 "name": "avg(FlightDelayMin)",
                 "type": "double",
               },
@@ -74,6 +76,7 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
           "userConfigs": Object {},
         },
         "vis": Object {
+          "barWidth": 0.97,
           "category": "Visualizations",
           "categoryAxis": "xaxis",
           "component": [Function],
@@ -107,59 +110,196 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
                   },
                   Object {
                     "editor": [Function],
-                    "id": "chart_options",
-                    "mapTo": "chartOptions",
-                    "name": "Chart options",
+                    "id": "legend",
+                    "mapTo": "legend",
+                    "name": "Legend",
                     "schemas": Array [
                       Object {
                         "component": null,
-                        "isSingleSelection": true,
-                        "mapTo": "orientation",
-                        "name": "Orientation",
+                        "mapTo": "showLegend",
+                        "name": "Show Legend",
                         "props": Object {
                           "defaultSelections": Array [
                             Object {
-                              "name": "Vertical",
-                              "orientationId": "v",
+                              "id": "show",
+                              "name": "Show",
                             },
                           ],
-                          "dropdownList": Array [
+                          "options": Array [
                             Object {
-                              "name": "Vertical",
-                              "orientationId": "v",
+                              "id": "show",
+                              "name": "Show",
                             },
                             Object {
-                              "name": "Horizontal",
-                              "orientationId": "h",
+                              "id": "hidden",
+                              "name": "Hidden",
                             },
                           ],
                         },
                       },
                       Object {
                         "component": null,
-                        "isSingleSelection": true,
-                        "mapTo": "mode",
-                        "name": "Mode",
+                        "mapTo": "position",
+                        "name": "Position",
                         "props": Object {
                           "defaultSelections": Array [
                             Object {
-                              "modeId": "group",
-                              "name": "Group",
+                              "id": "v",
+                              "name": "Right",
                             },
                           ],
-                          "dropdownList": Array [
+                          "options": Array [
                             Object {
-                              "modeId": "group",
-                              "name": "Group",
+                              "id": "v",
+                              "name": "Right",
                             },
                             Object {
-                              "modeId": "stack",
-                              "name": "Stack",
+                              "id": "h",
+                              "name": "Bottom",
                             },
                           ],
                         },
                       },
                     ],
+                  },
+                  Object {
+                    "editor": [Function],
+                    "id": "chart_styles",
+                    "mapTo": "chartStyles",
+                    "name": "Chart styles",
+                    "schemas": Array [
+                      Object {
+                        "component": [Function],
+                        "eleType": "buttons",
+                        "mapTo": "orientation",
+                        "name": "Orientation",
+                        "props": Object {
+                          "defaultSelections": Array [
+                            Object {
+                              "id": "v",
+                              "name": "Vertical",
+                            },
+                          ],
+                          "options": Array [
+                            Object {
+                              "id": "v",
+                              "name": "Vertical",
+                            },
+                            Object {
+                              "id": "h",
+                              "name": "Horizontal",
+                            },
+                          ],
+                        },
+                      },
+                      Object {
+                        "component": [Function],
+                        "eleType": "buttons",
+                        "mapTo": "mode",
+                        "name": "Mode",
+                        "props": Object {
+                          "defaultSelections": Array [
+                            Object {
+                              "id": "group",
+                              "name": "Group",
+                            },
+                          ],
+                          "options": Array [
+                            Object {
+                              "id": "group",
+                              "name": "Group",
+                            },
+                            Object {
+                              "id": "stack",
+                              "name": "Stack",
+                            },
+                          ],
+                        },
+                      },
+                      Object {
+                        "component": [Function],
+                        "defaultState": 0,
+                        "eleType": "slider",
+                        "mapTo": "rotateBarLabels",
+                        "name": "Rotate bar labels",
+                        "props": Object {
+                          "max": 90,
+                          "min": -90,
+                          "showTicks": true,
+                          "ticks": Array [
+                            Object {
+                              "label": "-90°",
+                              "value": -90,
+                            },
+                            Object {
+                              "label": "-45°",
+                              "value": -45,
+                            },
+                            Object {
+                              "label": "0°",
+                              "value": 0,
+                            },
+                            Object {
+                              "label": "45°",
+                              "value": 45,
+                            },
+                            Object {
+                              "label": "90°",
+                              "value": 90,
+                            },
+                          ],
+                        },
+                      },
+                      Object {
+                        "component": [Function],
+                        "defaultState": 0.7,
+                        "eleType": "slider",
+                        "mapTo": "groupWidth",
+                        "name": "Group width",
+                        "props": Object {
+                          "max": 1,
+                          "step": 0.01,
+                        },
+                      },
+                      Object {
+                        "component": [Function],
+                        "defaultState": 0.97,
+                        "eleType": "slider",
+                        "mapTo": "barWidth",
+                        "name": "Bar width",
+                        "props": Object {
+                          "max": 1,
+                          "step": 0.01,
+                        },
+                      },
+                      Object {
+                        "component": [Function],
+                        "defaultState": 1,
+                        "eleType": "slider",
+                        "mapTo": "lineWidth",
+                        "name": "Line width",
+                        "props": Object {
+                          "max": 10,
+                        },
+                      },
+                      Object {
+                        "component": [Function],
+                        "defaultState": 80,
+                        "eleType": "slider",
+                        "mapTo": "fillOpacity",
+                        "name": "Fill Opacity",
+                        "props": Object {
+                          "max": 100,
+                        },
+                      },
+                    ],
+                  },
+                  Object {
+                    "editor": [Function],
+                    "id": "color-theme",
+                    "mapTo": "colorTheme",
+                    "name": "Color Theme",
+                    "schemas": Array [],
                   },
                 ],
               },
@@ -170,19 +310,32 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
                 "mapTo": "layoutConfig",
                 "name": "Layout",
               },
+              Object {
+                "editor": [Function],
+                "id": "availability-panel",
+                "mapTo": "availabilityConfig",
+                "name": "Availability",
+              },
             ],
           },
+          "fillOpacity": 80,
           "fullLabel": "Bar",
+          "groupWidth": 0.7,
           "icon": [Function],
           "iconType": "visBarVerticalStacked",
           "id": "bar",
           "label": "Bar",
+          "labelAngle": 0,
+          "legendPosition": "v",
+          "lineWidth": 1,
+          "mode": "group",
           "name": "bar",
           "orientation": "v",
           "selection": Object {
             "dataLoss": "nothing",
           },
           "seriesAxis": "yaxis",
+          "showLegend": "show",
           "type": "bar",
           "visConfig": Object {
             "config": Object {
@@ -218,12 +371,14 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
             "defaultAxes": Object {
               "xaxis": Array [
                 Object {
+                  "label": "Carrier",
                   "name": "Carrier",
                   "type": "keyword",
                 },
               ],
               "yaxis": Array [
                 Object {
+                  "label": "avg(FlightDelayMin)",
                   "name": "avg(FlightDelayMin)",
                   "type": "double",
                 },
@@ -282,6 +437,7 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
             "userConfigs": Object {},
           },
           "vis": Object {
+            "barWidth": 0.97,
             "category": "Visualizations",
             "categoryAxis": "xaxis",
             "component": [Function],
@@ -315,59 +471,196 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
                     },
                     Object {
                       "editor": [Function],
-                      "id": "chart_options",
-                      "mapTo": "chartOptions",
-                      "name": "Chart options",
+                      "id": "legend",
+                      "mapTo": "legend",
+                      "name": "Legend",
                       "schemas": Array [
                         Object {
                           "component": null,
-                          "isSingleSelection": true,
-                          "mapTo": "orientation",
-                          "name": "Orientation",
+                          "mapTo": "showLegend",
+                          "name": "Show Legend",
                           "props": Object {
                             "defaultSelections": Array [
                               Object {
-                                "name": "Vertical",
-                                "orientationId": "v",
+                                "id": "show",
+                                "name": "Show",
                               },
                             ],
-                            "dropdownList": Array [
+                            "options": Array [
                               Object {
-                                "name": "Vertical",
-                                "orientationId": "v",
+                                "id": "show",
+                                "name": "Show",
                               },
                               Object {
-                                "name": "Horizontal",
-                                "orientationId": "h",
+                                "id": "hidden",
+                                "name": "Hidden",
                               },
                             ],
                           },
                         },
                         Object {
                           "component": null,
-                          "isSingleSelection": true,
-                          "mapTo": "mode",
-                          "name": "Mode",
+                          "mapTo": "position",
+                          "name": "Position",
                           "props": Object {
                             "defaultSelections": Array [
                               Object {
-                                "modeId": "group",
-                                "name": "Group",
+                                "id": "v",
+                                "name": "Right",
                               },
                             ],
-                            "dropdownList": Array [
+                            "options": Array [
                               Object {
-                                "modeId": "group",
-                                "name": "Group",
+                                "id": "v",
+                                "name": "Right",
                               },
                               Object {
-                                "modeId": "stack",
-                                "name": "Stack",
+                                "id": "h",
+                                "name": "Bottom",
                               },
                             ],
                           },
                         },
                       ],
+                    },
+                    Object {
+                      "editor": [Function],
+                      "id": "chart_styles",
+                      "mapTo": "chartStyles",
+                      "name": "Chart styles",
+                      "schemas": Array [
+                        Object {
+                          "component": [Function],
+                          "eleType": "buttons",
+                          "mapTo": "orientation",
+                          "name": "Orientation",
+                          "props": Object {
+                            "defaultSelections": Array [
+                              Object {
+                                "id": "v",
+                                "name": "Vertical",
+                              },
+                            ],
+                            "options": Array [
+                              Object {
+                                "id": "v",
+                                "name": "Vertical",
+                              },
+                              Object {
+                                "id": "h",
+                                "name": "Horizontal",
+                              },
+                            ],
+                          },
+                        },
+                        Object {
+                          "component": [Function],
+                          "eleType": "buttons",
+                          "mapTo": "mode",
+                          "name": "Mode",
+                          "props": Object {
+                            "defaultSelections": Array [
+                              Object {
+                                "id": "group",
+                                "name": "Group",
+                              },
+                            ],
+                            "options": Array [
+                              Object {
+                                "id": "group",
+                                "name": "Group",
+                              },
+                              Object {
+                                "id": "stack",
+                                "name": "Stack",
+                              },
+                            ],
+                          },
+                        },
+                        Object {
+                          "component": [Function],
+                          "defaultState": 0,
+                          "eleType": "slider",
+                          "mapTo": "rotateBarLabels",
+                          "name": "Rotate bar labels",
+                          "props": Object {
+                            "max": 90,
+                            "min": -90,
+                            "showTicks": true,
+                            "ticks": Array [
+                              Object {
+                                "label": "-90°",
+                                "value": -90,
+                              },
+                              Object {
+                                "label": "-45°",
+                                "value": -45,
+                              },
+                              Object {
+                                "label": "0°",
+                                "value": 0,
+                              },
+                              Object {
+                                "label": "45°",
+                                "value": 45,
+                              },
+                              Object {
+                                "label": "90°",
+                                "value": 90,
+                              },
+                            ],
+                          },
+                        },
+                        Object {
+                          "component": [Function],
+                          "defaultState": 0.7,
+                          "eleType": "slider",
+                          "mapTo": "groupWidth",
+                          "name": "Group width",
+                          "props": Object {
+                            "max": 1,
+                            "step": 0.01,
+                          },
+                        },
+                        Object {
+                          "component": [Function],
+                          "defaultState": 0.97,
+                          "eleType": "slider",
+                          "mapTo": "barWidth",
+                          "name": "Bar width",
+                          "props": Object {
+                            "max": 1,
+                            "step": 0.01,
+                          },
+                        },
+                        Object {
+                          "component": [Function],
+                          "defaultState": 1,
+                          "eleType": "slider",
+                          "mapTo": "lineWidth",
+                          "name": "Line width",
+                          "props": Object {
+                            "max": 10,
+                          },
+                        },
+                        Object {
+                          "component": [Function],
+                          "defaultState": 80,
+                          "eleType": "slider",
+                          "mapTo": "fillOpacity",
+                          "name": "Fill Opacity",
+                          "props": Object {
+                            "max": 100,
+                          },
+                        },
+                      ],
+                    },
+                    Object {
+                      "editor": [Function],
+                      "id": "color-theme",
+                      "mapTo": "colorTheme",
+                      "name": "Color Theme",
+                      "schemas": Array [],
                     },
                   ],
                 },
@@ -378,19 +671,32 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
                   "mapTo": "layoutConfig",
                   "name": "Layout",
                 },
+                Object {
+                  "editor": [Function],
+                  "id": "availability-panel",
+                  "mapTo": "availabilityConfig",
+                  "name": "Availability",
+                },
               ],
             },
+            "fillOpacity": 80,
             "fullLabel": "Bar",
+            "groupWidth": 0.7,
             "icon": [Function],
             "iconType": "visBarVerticalStacked",
             "id": "bar",
             "label": "Bar",
+            "labelAngle": 0,
+            "legendPosition": "v",
+            "lineWidth": 1,
+            "mode": "group",
             "name": "bar",
             "orientation": "v",
             "selection": Object {
               "dataLoss": "nothing",
             },
             "seriesAxis": "yaxis",
+            "showLegend": "show",
             "type": "bar",
             "visConfig": Object {
               "config": Object {
@@ -449,12 +755,14 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
               "defaultAxes": Object {
                 "xaxis": Array [
                   Object {
+                    "label": "Carrier",
                     "name": "Carrier",
                     "type": "keyword",
                   },
                 ],
                 "yaxis": Array [
                   Object {
+                    "label": "avg(FlightDelayMin)",
                     "name": "avg(FlightDelayMin)",
                     "type": "double",
                   },
@@ -513,6 +821,7 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
               "userConfigs": Object {},
             },
             "vis": Object {
+              "barWidth": 0.97,
               "category": "Visualizations",
               "categoryAxis": "xaxis",
               "component": [Function],
@@ -546,59 +855,196 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
                       },
                       Object {
                         "editor": [Function],
-                        "id": "chart_options",
-                        "mapTo": "chartOptions",
-                        "name": "Chart options",
+                        "id": "legend",
+                        "mapTo": "legend",
+                        "name": "Legend",
                         "schemas": Array [
                           Object {
                             "component": null,
-                            "isSingleSelection": true,
-                            "mapTo": "orientation",
-                            "name": "Orientation",
+                            "mapTo": "showLegend",
+                            "name": "Show Legend",
                             "props": Object {
                               "defaultSelections": Array [
                                 Object {
-                                  "name": "Vertical",
-                                  "orientationId": "v",
+                                  "id": "show",
+                                  "name": "Show",
                                 },
                               ],
-                              "dropdownList": Array [
+                              "options": Array [
                                 Object {
-                                  "name": "Vertical",
-                                  "orientationId": "v",
+                                  "id": "show",
+                                  "name": "Show",
                                 },
                                 Object {
-                                  "name": "Horizontal",
-                                  "orientationId": "h",
+                                  "id": "hidden",
+                                  "name": "Hidden",
                                 },
                               ],
                             },
                           },
                           Object {
                             "component": null,
-                            "isSingleSelection": true,
-                            "mapTo": "mode",
-                            "name": "Mode",
+                            "mapTo": "position",
+                            "name": "Position",
                             "props": Object {
                               "defaultSelections": Array [
                                 Object {
-                                  "modeId": "group",
-                                  "name": "Group",
+                                  "id": "v",
+                                  "name": "Right",
                                 },
                               ],
-                              "dropdownList": Array [
+                              "options": Array [
                                 Object {
-                                  "modeId": "group",
-                                  "name": "Group",
+                                  "id": "v",
+                                  "name": "Right",
                                 },
                                 Object {
-                                  "modeId": "stack",
-                                  "name": "Stack",
+                                  "id": "h",
+                                  "name": "Bottom",
                                 },
                               ],
                             },
                           },
                         ],
+                      },
+                      Object {
+                        "editor": [Function],
+                        "id": "chart_styles",
+                        "mapTo": "chartStyles",
+                        "name": "Chart styles",
+                        "schemas": Array [
+                          Object {
+                            "component": [Function],
+                            "eleType": "buttons",
+                            "mapTo": "orientation",
+                            "name": "Orientation",
+                            "props": Object {
+                              "defaultSelections": Array [
+                                Object {
+                                  "id": "v",
+                                  "name": "Vertical",
+                                },
+                              ],
+                              "options": Array [
+                                Object {
+                                  "id": "v",
+                                  "name": "Vertical",
+                                },
+                                Object {
+                                  "id": "h",
+                                  "name": "Horizontal",
+                                },
+                              ],
+                            },
+                          },
+                          Object {
+                            "component": [Function],
+                            "eleType": "buttons",
+                            "mapTo": "mode",
+                            "name": "Mode",
+                            "props": Object {
+                              "defaultSelections": Array [
+                                Object {
+                                  "id": "group",
+                                  "name": "Group",
+                                },
+                              ],
+                              "options": Array [
+                                Object {
+                                  "id": "group",
+                                  "name": "Group",
+                                },
+                                Object {
+                                  "id": "stack",
+                                  "name": "Stack",
+                                },
+                              ],
+                            },
+                          },
+                          Object {
+                            "component": [Function],
+                            "defaultState": 0,
+                            "eleType": "slider",
+                            "mapTo": "rotateBarLabels",
+                            "name": "Rotate bar labels",
+                            "props": Object {
+                              "max": 90,
+                              "min": -90,
+                              "showTicks": true,
+                              "ticks": Array [
+                                Object {
+                                  "label": "-90°",
+                                  "value": -90,
+                                },
+                                Object {
+                                  "label": "-45°",
+                                  "value": -45,
+                                },
+                                Object {
+                                  "label": "0°",
+                                  "value": 0,
+                                },
+                                Object {
+                                  "label": "45°",
+                                  "value": 45,
+                                },
+                                Object {
+                                  "label": "90°",
+                                  "value": 90,
+                                },
+                              ],
+                            },
+                          },
+                          Object {
+                            "component": [Function],
+                            "defaultState": 0.7,
+                            "eleType": "slider",
+                            "mapTo": "groupWidth",
+                            "name": "Group width",
+                            "props": Object {
+                              "max": 1,
+                              "step": 0.01,
+                            },
+                          },
+                          Object {
+                            "component": [Function],
+                            "defaultState": 0.97,
+                            "eleType": "slider",
+                            "mapTo": "barWidth",
+                            "name": "Bar width",
+                            "props": Object {
+                              "max": 1,
+                              "step": 0.01,
+                            },
+                          },
+                          Object {
+                            "component": [Function],
+                            "defaultState": 1,
+                            "eleType": "slider",
+                            "mapTo": "lineWidth",
+                            "name": "Line width",
+                            "props": Object {
+                              "max": 10,
+                            },
+                          },
+                          Object {
+                            "component": [Function],
+                            "defaultState": 80,
+                            "eleType": "slider",
+                            "mapTo": "fillOpacity",
+                            "name": "Fill Opacity",
+                            "props": Object {
+                              "max": 100,
+                            },
+                          },
+                        ],
+                      },
+                      Object {
+                        "editor": [Function],
+                        "id": "color-theme",
+                        "mapTo": "colorTheme",
+                        "name": "Color Theme",
+                        "schemas": Array [],
                       },
                     ],
                   },
@@ -609,19 +1055,32 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
                     "mapTo": "layoutConfig",
                     "name": "Layout",
                   },
+                  Object {
+                    "editor": [Function],
+                    "id": "availability-panel",
+                    "mapTo": "availabilityConfig",
+                    "name": "Availability",
+                  },
                 ],
               },
+              "fillOpacity": 80,
               "fullLabel": "Bar",
+              "groupWidth": 0.7,
               "icon": [Function],
               "iconType": "visBarVerticalStacked",
               "id": "bar",
               "label": "Bar",
+              "labelAngle": 0,
+              "legendPosition": "v",
+              "lineWidth": 1,
+              "mode": "group",
               "name": "bar",
               "orientation": "v",
               "selection": Object {
                 "dataLoss": "nothing",
               },
               "seriesAxis": "yaxis",
+              "showLegend": "show",
               "type": "bar",
               "visConfig": Object {
                 "config": Object {
@@ -660,12 +1119,11 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
             Array [
               Object {
                 "marker": Object {
-                  "color": Array [
-                    "#3CA1C7",
-                    "#8C55A3",
-                    "#DB748A",
-                    "#F2BE4B",
-                  ],
+                  "color": "rgba(60,161,199,0.4)",
+                  "line": Object {
+                    "color": "#3CA1C7",
+                    "width": 1,
+                  },
                 },
                 "name": "avg(FlightDelayMin)",
                 "orientation": "v",
@@ -687,7 +1145,9 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
           }
           layout={
             Object {
-              "barmode": "",
+              "bargap": 0.30000000000000004,
+              "bargroupgap": 0.030000000000000027,
+              "barmode": "group",
               "colorway": Array [
                 "#3CA1C7",
                 "#8C55A3",
@@ -714,6 +1174,10 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
               },
               "showlegend": true,
               "title": "",
+              "xaxis": Object {
+                "automargin": true,
+                "tickangle": 0,
+              },
             }
           }
         >
@@ -729,12 +1193,11 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
               Array [
                 Object {
                   "marker": Object {
-                    "color": Array [
-                      "#3CA1C7",
-                      "#8C55A3",
-                      "#DB748A",
-                      "#F2BE4B",
-                    ],
+                    "color": "rgba(60,161,199,0.4)",
+                    "line": Object {
+                      "color": "#3CA1C7",
+                      "width": 1,
+                    },
                   },
                   "name": "avg(FlightDelayMin)",
                   "orientation": "v",
@@ -755,10 +1218,13 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
               ]
             }
             debug={false}
+            divId="explorerPlotComponent"
             layout={
               Object {
                 "autosize": true,
-                "barmode": "",
+                "bargap": 0.30000000000000004,
+                "bargroupgap": 0.030000000000000027,
+                "barmode": "group",
                 "colorway": Array [
                   "#3CA1C7",
                   "#8C55A3",
@@ -788,9 +1254,7 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
                 "title": "",
                 "xaxis": Object {
                   "automargin": true,
-                  "rangemode": "normal",
-                  "showgrid": true,
-                  "zeroline": false,
+                  "tickangle": 0,
                 },
                 "yaxis": Object {
                   "rangemode": "normal",
@@ -808,6 +1272,7 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
             useResizeHandler={true}
           >
             <div
+              id="explorerPlotComponent"
               style={
                 Object {
                   "height": "100%",
@@ -833,12 +1298,14 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
           "defaultAxes": Object {
             "xaxis": Array [
               Object {
+                "label": "Carrier",
                 "name": "Carrier",
                 "type": "keyword",
               },
             ],
             "yaxis": Array [
               Object {
+                "label": "avg(FlightDelayMin)",
                 "name": "avg(FlightDelayMin)",
                 "type": "double",
               },
@@ -981,6 +1448,12 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                 "mapTo": "layoutConfig",
                 "name": "Layout",
               },
+              Object {
+                "editor": [Function],
+                "id": "availability-panel",
+                "mapTo": "availabilityConfig",
+                "name": "Availability",
+              },
             ],
           },
           "fullLabel": "Line",
@@ -1058,12 +1531,14 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
             "defaultAxes": Object {
               "xaxis": Array [
                 Object {
+                  "label": "Carrier",
                   "name": "Carrier",
                   "type": "keyword",
                 },
               ],
               "yaxis": Array [
                 Object {
+                  "label": "avg(FlightDelayMin)",
                   "name": "avg(FlightDelayMin)",
                   "type": "double",
                 },
@@ -1206,6 +1681,12 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                   "mapTo": "layoutConfig",
                   "name": "Layout",
                 },
+                Object {
+                  "editor": [Function],
+                  "id": "availability-panel",
+                  "mapTo": "availabilityConfig",
+                  "name": "Availability",
+                },
               ],
             },
             "fullLabel": "Line",
@@ -1337,12 +1818,14 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
               "defaultAxes": Object {
                 "xaxis": Array [
                   Object {
+                    "label": "Carrier",
                     "name": "Carrier",
                     "type": "keyword",
                   },
                 ],
                 "yaxis": Array [
                   Object {
+                    "label": "avg(FlightDelayMin)",
                     "name": "avg(FlightDelayMin)",
                     "type": "double",
                   },
@@ -1484,6 +1967,12 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                     "id": "style-panel",
                     "mapTo": "layoutConfig",
                     "name": "Layout",
+                  },
+                  Object {
+                    "editor": [Function],
+                    "id": "availability-panel",
+                    "mapTo": "availabilityConfig",
+                    "name": "Availability",
                   },
                 ],
               },
@@ -1669,6 +2158,7 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
               ]
             }
             debug={false}
+            divId="explorerPlotComponent"
             layout={
               Object {
                 "autosize": true,
@@ -1723,6 +2213,7 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
             useResizeHandler={true}
           >
             <div
+              id="explorerPlotComponent"
               style={
                 Object {
                   "height": "100%",
@@ -1748,12 +2239,14 @@ exports[`Utils helper functions renders displayVisualization function 3`] = `
           "defaultAxes": Object {
             "xaxis": Array [
               Object {
+                "label": "Carrier",
                 "name": "Carrier",
                 "type": "keyword",
               },
             ],
             "yaxis": Array [
               Object {
+                "label": "avg(FlightDelayMin)",
                 "name": "avg(FlightDelayMin)",
                 "type": "double",
               },
@@ -1956,12 +2449,14 @@ exports[`Utils helper functions renders displayVisualization function 3`] = `
             "defaultAxes": Object {
               "xaxis": Array [
                 Object {
+                  "label": "Carrier",
                   "name": "Carrier",
                   "type": "keyword",
                 },
               ],
               "yaxis": Array [
                 Object {
+                  "label": "avg(FlightDelayMin)",
                   "name": "avg(FlightDelayMin)",
                   "type": "double",
                 },
@@ -2187,12 +2682,14 @@ exports[`Utils helper functions renders displayVisualization function 3`] = `
               "defaultAxes": Object {
                 "xaxis": Array [
                   Object {
+                    "label": "Carrier",
                     "name": "Carrier",
                     "type": "keyword",
                   },
                 ],
                 "yaxis": Array [
                   Object {
+                    "label": "avg(FlightDelayMin)",
                     "name": "avg(FlightDelayMin)",
                     "type": "double",
                   },
@@ -2398,34 +2895,35 @@ exports[`Utils helper functions renders displayVisualization function 3`] = `
             Array [
               Object {
                 "marker": Object {
-                  "color": Array [
-                    "#3CA1C7",
-                    "#8C55A3",
-                    "#DB748A",
-                    "#F2BE4B",
-                  ],
+                  "color": "rgba(60,161,199,NaN)",
+                  "line": Object {
+                    "color": "#3CA1C7",
+                    "width": undefined,
+                  },
                 },
                 "name": "avg(FlightDelayMin)",
                 "orientation": "h",
                 "type": "bar",
                 "x": Array [
-                  53.65384615384615,
-                  45.36144578313253,
-                  63.1578947368421,
-                  46.81318681318681,
-                ],
-                "y": Array [
                   "BeatsWest",
                   "Logstash Airways",
                   "OpenSearch Dashboards Airlines",
                   "OpenSearch-Air",
+                ],
+                "y": Array [
+                  53.65384615384615,
+                  45.36144578313253,
+                  63.1578947368421,
+                  46.81318681318681,
                 ],
               },
             ]
           }
           layout={
             Object {
-              "barmode": "",
+              "bargap": NaN,
+              "bargroupgap": NaN,
+              "barmode": undefined,
               "colorway": Array [
                 "#3CA1C7",
                 "#8C55A3",
@@ -2440,7 +2938,7 @@ exports[`Utils helper functions renders displayVisualization function 3`] = `
               ],
               "height": 500,
               "legend": Object {
-                "orientation": "v",
+                "orientation": undefined,
                 "traceorder": "normal",
               },
               "margin": Object {
@@ -2452,6 +2950,10 @@ exports[`Utils helper functions renders displayVisualization function 3`] = `
               },
               "showlegend": true,
               "title": "",
+              "xaxis": Object {
+                "automargin": true,
+                "tickangle": undefined,
+              },
             }
           }
         >
@@ -2467,36 +2969,38 @@ exports[`Utils helper functions renders displayVisualization function 3`] = `
               Array [
                 Object {
                   "marker": Object {
-                    "color": Array [
-                      "#3CA1C7",
-                      "#8C55A3",
-                      "#DB748A",
-                      "#F2BE4B",
-                    ],
+                    "color": "rgba(60,161,199,NaN)",
+                    "line": Object {
+                      "color": "#3CA1C7",
+                      "width": undefined,
+                    },
                   },
                   "name": "avg(FlightDelayMin)",
                   "orientation": "h",
                   "type": "bar",
                   "x": Array [
-                    53.65384615384615,
-                    45.36144578313253,
-                    63.1578947368421,
-                    46.81318681318681,
-                  ],
-                  "y": Array [
                     "BeatsWest",
                     "Logstash Airways",
                     "OpenSearch Dashboards Airlines",
                     "OpenSearch-Air",
                   ],
+                  "y": Array [
+                    53.65384615384615,
+                    45.36144578313253,
+                    63.1578947368421,
+                    46.81318681318681,
+                  ],
                 },
               ]
             }
             debug={false}
+            divId="explorerPlotComponent"
             layout={
               Object {
                 "autosize": true,
-                "barmode": "",
+                "bargap": NaN,
+                "bargroupgap": NaN,
+                "barmode": undefined,
                 "colorway": Array [
                   "#3CA1C7",
                   "#8C55A3",
@@ -2512,7 +3016,7 @@ exports[`Utils helper functions renders displayVisualization function 3`] = `
                 "height": 500,
                 "hovermode": "closest",
                 "legend": Object {
-                  "orientation": "v",
+                  "orientation": undefined,
                   "traceorder": "normal",
                 },
                 "margin": Object {
@@ -2526,9 +3030,7 @@ exports[`Utils helper functions renders displayVisualization function 3`] = `
                 "title": "",
                 "xaxis": Object {
                   "automargin": true,
-                  "rangemode": "normal",
-                  "showgrid": true,
-                  "zeroline": false,
+                  "tickangle": undefined,
                 },
                 "yaxis": Object {
                   "rangemode": "normal",
@@ -2546,6 +3048,7 @@ exports[`Utils helper functions renders displayVisualization function 3`] = `
             useResizeHandler={true}
           >
             <div
+              id="explorerPlotComponent"
               style={
                 Object {
                   "height": "100%",
@@ -2571,12 +3074,14 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
           "defaultAxes": Object {
             "xaxis": Array [
               Object {
+                "label": "span(timestamp,1h)",
                 "name": "span(timestamp,1h)",
                 "type": "timestamp",
               },
             ],
             "yaxis": Array [
               Object {
+                "label": "count('ip')",
                 "name": "count('ip')",
                 "type": "integer",
               },
@@ -2752,12 +3257,14 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
             "defaultAxes": Object {
               "xaxis": Array [
                 Object {
+                  "label": "span(timestamp,1h)",
                   "name": "span(timestamp,1h)",
                   "type": "timestamp",
                 },
               ],
               "yaxis": Array [
                 Object {
+                  "label": "count('ip')",
                   "name": "count('ip')",
                   "type": "integer",
                 },
@@ -2956,12 +3463,14 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
               "defaultAxes": Object {
                 "xaxis": Array [
                   Object {
+                    "label": "span(timestamp,1h)",
                     "name": "span(timestamp,1h)",
                     "type": "timestamp",
                   },
                 ],
                 "yaxis": Array [
                   Object {
+                    "label": "count('ip')",
                     "name": "count('ip')",
                     "type": "integer",
                   },
@@ -3140,7 +3649,11 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
             Array [
               Object {
                 "marker": Object {
-                  "color": Array [],
+                  "color": "rgba(60,161,199,NaN)",
+                  "line": Object {
+                    "color": "#3CA1C7",
+                    "width": undefined,
+                  },
                 },
                 "name": "count('ip')",
                 "orientation": "h",
@@ -3152,7 +3665,9 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
           }
           layout={
             Object {
-              "barmode": "",
+              "bargap": NaN,
+              "bargroupgap": NaN,
+              "barmode": undefined,
               "colorway": Array [
                 "#3CA1C7",
                 "#8C55A3",
@@ -3167,7 +3682,7 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
               ],
               "height": 500,
               "legend": Object {
-                "orientation": "v",
+                "orientation": undefined,
                 "traceorder": "normal",
               },
               "margin": Object {
@@ -3179,6 +3694,10 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
               },
               "showlegend": true,
               "title": "",
+              "xaxis": Object {
+                "automargin": true,
+                "tickangle": undefined,
+              },
             }
           }
         >
@@ -3194,7 +3713,11 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
               Array [
                 Object {
                   "marker": Object {
-                    "color": Array [],
+                    "color": "rgba(60,161,199,NaN)",
+                    "line": Object {
+                      "color": "#3CA1C7",
+                      "width": undefined,
+                    },
                   },
                   "name": "count('ip')",
                   "orientation": "h",
@@ -3205,10 +3728,13 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
               ]
             }
             debug={false}
+            divId="explorerPlotComponent"
             layout={
               Object {
                 "autosize": true,
-                "barmode": "",
+                "bargap": NaN,
+                "bargroupgap": NaN,
+                "barmode": undefined,
                 "colorway": Array [
                   "#3CA1C7",
                   "#8C55A3",
@@ -3224,7 +3750,7 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
                 "height": 500,
                 "hovermode": "closest",
                 "legend": Object {
-                  "orientation": "v",
+                  "orientation": undefined,
                   "traceorder": "normal",
                 },
                 "margin": Object {
@@ -3238,9 +3764,7 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
                 "title": "",
                 "xaxis": Object {
                   "automargin": true,
-                  "rangemode": "normal",
-                  "showgrid": true,
-                  "zeroline": false,
+                  "tickangle": undefined,
                 },
                 "yaxis": Object {
                   "rangemode": "normal",
@@ -3258,6 +3782,7 @@ exports[`Utils helper functions renders displayVisualization function 4`] = `
             useResizeHandler={true}
           >
             <div
+              id="explorerPlotComponent"
               style={
                 Object {
                   "height": "100%",

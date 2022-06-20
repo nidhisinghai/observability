@@ -31,6 +31,7 @@ export interface IQueryTab {
 export interface IField {
   name: string;
   type: string;
+  label?: string;
 }
 
 export interface ITabQueryResults {
@@ -110,6 +111,8 @@ export interface IExplorerProps {
   setStartTime?: any;
   setEndTime?: any;
   appBaseQuery?: string;
+  callback?: any;
+  callbackInApp?: any;
 }
 
 export interface SavedQuery {
@@ -184,11 +187,15 @@ export interface IConfigPanelOptions {
 export interface IConfigPanelOptionSection {
   name: string;
   component: null;
-  mapTo: 'mode';
+  mapTo: string;
   props?: any;
   isSingleSelection?: boolean;
   defaultState?: number;
+<<<<<<< HEAD
   max?: number;
+=======
+  eleType?: string;
+>>>>>>> 3043a965913cf6e30e417b64327cb57ac1390212
 }
 
 export interface IVisualizationTypeDefination {

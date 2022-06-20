@@ -24,10 +24,10 @@ import PPLService from 'public/services/requests/ppl';
 import SavedObjects from 'public/services/saved_objects/event_analytics/saved_objects';
 import TimestampUtils from 'public/services/timestamp/timestamp';
 import React, { ReactChild, useEffect, useState } from 'react';
-import { uniqueId } from 'lodash';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { last } from 'lodash';
+import { VisualizationType } from 'common/types/custom_panels';
 import { TracesContent } from '../../../components/trace_analytics/components/traces/traces_content';
 import { DashboardContent } from '../../../components/trace_analytics/components/dashboard/dashboard_content';
 import { ServicesContent } from '../../trace_analytics/components/services/services_content';
@@ -39,17 +39,17 @@ import { SpanDetailTable } from '../../../../public/components/trace_analytics/c
 import { Explorer } from '../../event_analytics/explorer/explorer';
 import { Configuration } from './configuration';
 import {
-  TAB_CONFIG_ID_TXT_PFX,
+  TAB_CONFIG_ID,
   TAB_CONFIG_TITLE,
-  TAB_LOG_ID_TXT_PFX,
+  TAB_LOG_ID,
   TAB_LOG_TITLE,
-  TAB_OVERVIEW_ID_TXT_PFX,
+  TAB_OVERVIEW_ID,
   TAB_OVERVIEW_TITLE,
-  TAB_PANEL_ID_TXT_PFX,
+  TAB_PANEL_ID,
   TAB_PANEL_TITLE,
-  TAB_SERVICE_ID_TXT_PFX,
+  TAB_SERVICE_ID,
   TAB_SERVICE_TITLE,
-  TAB_TRACE_ID_TXT_PFX,
+  TAB_TRACE_ID,
   TAB_TRACE_TITLE,
 } from '../../../../common/constants/application_analytics';
 import { TAB_EVENT_ID, TAB_CHART_ID, NEW_TAB } from '../../../../common/constants/explorer';
@@ -57,19 +57,16 @@ import { IQueryTab } from '../../../../common/types/explorer';
 import { NotificationsStart } from '../../../../../../src/core/public';
 import { AppAnalyticsComponentDeps } from '../home';
 import { CustomPanelView } from '../../../../public/components/custom_panels/custom_panel_view';
-import { ApplicationType } from '../../../../common/types/app_analytics';
+import {
+  ApplicationRequestType,
+  ApplicationType,
+} from '../../../../common/types/application_analytics';
 import { CUSTOM_PANELS_API_PREFIX } from '../../../../common/constants/custom_panels';
 import { ServiceDetailFlyout } from './flyout_components/service_detail_flyout';
 import { SpanDetailFlyout } from '../../../../public/components/trace_analytics/components/traces/span_detail_flyout';
 import { TraceDetailFlyout } from './flyout_components/trace_detail_flyout';
 import { fetchAppById, initializeTabData } from '../helpers/utils';
 
-const TAB_OVERVIEW_ID = uniqueId(TAB_OVERVIEW_ID_TXT_PFX);
-const TAB_SERVICE_ID = uniqueId(TAB_SERVICE_ID_TXT_PFX);
-const TAB_TRACE_ID = uniqueId(TAB_TRACE_ID_TXT_PFX);
-const TAB_LOG_ID = uniqueId(TAB_LOG_ID_TXT_PFX);
-const TAB_PANEL_ID = uniqueId(TAB_PANEL_ID_TXT_PFX);
-const TAB_CONFIG_ID = uniqueId(TAB_CONFIG_ID_TXT_PFX);
 const searchBarConfigs = {
   [TAB_EVENT_ID]: {
     showSaveButton: false,
@@ -81,14 +78,6 @@ const searchBarConfigs = {
   },
 };
 
-export interface DetailTab {
-  id: string;
-  label: string;
-  description: string;
-  onClick: () => void;
-  testId: string;
-}
-
 interface AppDetailProps extends AppAnalyticsComponentDeps {
   disabled?: boolean;
   appId: string;
@@ -97,8 +86,9 @@ interface AppDetailProps extends AppAnalyticsComponentDeps {
   savedObjects: SavedObjects;
   timestampUtils: TimestampUtils;
   notifications: NotificationsStart;
-  updateApp: (appId: string, updateAppData: Partial<ApplicationType>, type: string) => void;
+  updateApp: (appId: string, updateAppData: Partial<ApplicationRequestType>, type: string) => void;
   setToasts: (title: string, color?: string, text?: ReactChild) => void;
+  callback: (childfunction: () => void) => void;
 }
 
 export function Application(props: AppDetailProps) {
@@ -119,17 +109,22 @@ export function Application(props: AppDetailProps) {
     setAppConfigs,
     setToasts,
     setFilters,
+    callback,
   } = props;
   const [application, setApplication] = useState<ApplicationType>({
+    id: '',
+    dateCreated: '',
+    dateModified: '',
     name: '',
     description: '',
     baseQuery: '',
     servicesEntities: [],
     traceGroups: [],
     panelId: '',
-    availabilityVisId: '',
+    availability: { name: '', color: '', availabilityVisId: '' },
   });
   const dispatch = useDispatch();
+  const [triggerAvailability, setTriggerAvailability] = useState(false);
   const [selectedTabId, setSelectedTab] = useState<string>(TAB_OVERVIEW_ID);
   const [serviceFlyoutName, setServiceFlyoutName] = useState<string>('');
   const [traceFlyoutId, setTraceFlyoutId] = useState<string>('');
@@ -212,6 +207,7 @@ export function Application(props: AppDetailProps) {
     );
     const tabId = `application-analytics-tab-${appId}`;
     initializeTabData(dispatch, tabId, NEW_TAB);
+    callback(switchToEvent);
   }, [appId]);
 
   useEffect(() => {
@@ -379,6 +375,8 @@ export function Application(props: AppDetailProps) {
         setStartTime={setStartTimeForApp}
         setEndTime={setEndTimeForApp}
         appBaseQuery={application.baseQuery}
+        callback={callback}
+        callbackInApp={callbackInApp}
         curSelectedTabId={selectedTabId}
       />
     );
@@ -386,6 +384,16 @@ export function Application(props: AppDetailProps) {
 
   const onEditClick = (savedVisualizationId: string) => {
     switchToEditViz(savedVisualizationId);
+  };
+
+  const updateAvailabilityVizId = (vizs: VisualizationType[]) => {
+    if (
+      !vizs
+        .map((viz) => viz.savedVisualizationId)
+        .includes(application.availability.availabilityVisId)
+    ) {
+      updateApp(appId, { availabilityVisId: '' }, 'editAvailability');
+    }
   };
 
   const getPanel = () => {
@@ -405,6 +413,7 @@ export function Application(props: AppDetailProps) {
         setToast={setToasts}
         page="app"
         appId={appId}
+        updateAvailabilityVizId={updateAvailabilityVizId}
         startTime={appStartTime}
         endTime={appEndTime}
         setStartTime={setStartTimeForApp}
@@ -428,13 +437,25 @@ export function Application(props: AppDetailProps) {
     }
   };
 
+  const switchToAvailability = () => {
+    switchToEvent();
+    setTriggerAvailability(true);
+  };
+
+  const callbackInApp = (childFunc: () => void) => {
+    if (childFunc && triggerAvailability) {
+      childFunc();
+      setTriggerAvailability(false);
+    }
+  };
+
   const getConfig = () => {
     return (
       <Configuration
         appId={appId}
         parentBreadcrumbs={parentBreadcrumbs}
         application={application}
-        switchToEditViz={switchToEditViz}
+        switchToAvailability={switchToAvailability}
         visWithAvailability={visWithAvailability}
         updateApp={updateApp}
       />
@@ -454,7 +475,7 @@ export function Application(props: AppDetailProps) {
       id: tabId,
       name: (
         <>
-          <EuiText size="s" textAlign="left" color="default">
+          <EuiText data-test-subj={`${tabId}Tab`} size="s" textAlign="left" color="default">
             <span className="tab-title">{tabTitle}</span>
           </EuiText>
         </>
@@ -503,7 +524,7 @@ export function Application(props: AppDetailProps) {
           <EuiPageHeader>
             <EuiPageHeaderSection>
               <EuiTitle size="l">
-                <h1 data-test-subj={'appAnalyticsAppName'}>{application.name}</h1>
+                <h1 data-test-subj="applicationTitle">{application.name}</h1>
               </EuiTitle>
               <EuiText>
                 <p>{application.description}</p>

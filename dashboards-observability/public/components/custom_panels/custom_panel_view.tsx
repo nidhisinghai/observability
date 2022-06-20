@@ -39,7 +39,7 @@ import {
 } from '../../../common/constants/custom_panels';
 import { SavedVisualizationType, VisualizationType } from '../../../common/types/custom_panels';
 import { PanelGrid } from './panel_modules/panel_grid';
-import { DeletePanelModal, getCustomModal } from './helpers/modal_containers';
+import { getCustomModal } from './helpers/modal_containers';
 import PPLService from '../../services/requests/ppl';
 import {
   isDateValid,
@@ -59,6 +59,7 @@ import {
   parseForIndices,
 } from '../common/search/autocomplete_logic';
 import { AddVisualizationPopover } from './helpers/add_visualization_popover';
+import { DeleteModal } from '../common/helpers/delete_modal';
 
 /*
  * "CustomPanelsView" module used to render an Operational Panel
@@ -109,6 +110,7 @@ interface CustomPanelViewProps {
   setEndTime: any;
   childBreadcrumbs?: EuiBreadcrumb[];
   appId?: string;
+  updateAvailabilityVizId?: any;
   onAddClick?: any;
 }
 
@@ -127,6 +129,7 @@ export const CustomPanelView = (props: CustomPanelViewProps) => {
     endTime,
     setStartTime,
     setEndTime,
+    updateAvailabilityVizId,
     renameCustomPanel,
     deleteCustomPanel,
     cloneCustomPanel,
@@ -222,7 +225,7 @@ export const CustomPanelView = (props: CustomPanelViewProps) => {
 
   const deletePanel = () => {
     setModalLayout(
-      <DeletePanelModal
+      <DeleteModal
         onConfirm={onDelete}
         onCancel={closeModal}
         title={`Delete ${openPanelName}`}
@@ -413,7 +416,12 @@ export const CustomPanelView = (props: CustomPanelViewProps) => {
   );
 
   const addButton = (
-    <EuiButton iconType="plusInCircle" onClick={onAddClick} isDisabled={addVizDisabled}>
+    <EuiButton
+      data-test-subj="addVisualizationButton"
+      iconType="plusInCircle"
+      onClick={onAddClick}
+      isDisabled={addVizDisabled}
+    >
       Add
     </EuiButton>
   );
@@ -638,6 +646,7 @@ export const CustomPanelView = (props: CustomPanelViewProps) => {
             <PanelGrid
               http={http}
               panelId={panelId}
+              updateAvailabilityVizId={updateAvailabilityVizId}
               chrome={chrome}
               panelVisualizations={panelVisualizations}
               setPanelVisualizations={setPanelVisualizations}

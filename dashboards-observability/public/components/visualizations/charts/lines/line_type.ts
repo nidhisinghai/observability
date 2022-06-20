@@ -15,7 +15,12 @@ import {
   ConfigChartStyles,
   ConfigLegend,
 } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
+<<<<<<< HEAD
 import { DefaultChartStyles } from '../../../../../common/constants/shared';
+=======
+import { ConfigAvailability } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_availability';
+
+>>>>>>> 3043a965913cf6e30e417b64327cb57ac1390212
 const sharedConfigs = getPlotlySharedConfigs();
 const VIS_CATEGORY = getPlotlyCategory();
 const { DefaultMode, Interpolation, LineWidth, FillOpacity } = DefaultChartStyles;
@@ -180,6 +185,12 @@ export const createLineTypeDefinition = (params: any = {}) => ({
         mapTo: 'layoutConfig',
         editor: ConfigEditor,
         content: [],
+      },
+      {
+        id: 'availability-panel',
+        name: 'Availability',
+        mapTo: 'availabilityConfig',
+        editor: ConfigAvailability,
       },
     ],
   },

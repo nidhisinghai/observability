@@ -24,7 +24,10 @@ import { handleIndicesExistRequest } from '../trace_analytics/requests/request_h
 import { ObservabilitySideBar } from '../common/side_nav';
 import { NotificationsStart } from '../../../../../src/core/public';
 import { APP_ANALYTICS_API_PREFIX } from '../../../common/constants/application_analytics';
-import { ApplicationListType, ApplicationType } from '../../../common/types/app_analytics';
+import {
+  ApplicationRequestType,
+  ApplicationType,
+} from '../../../common/types/application_analytics';
 import {
   calculateAvailability,
   fetchPanelsVizIdList,
@@ -67,8 +70,9 @@ export const Home = (props: HomeProps) => {
     chrome,
     notifications,
   } = props;
+  const [triggerSwitchToEvent, setTriggerSwitchToEvent] = useState(0);
   const dispatch = useDispatch();
-  const [applicationList, setApplicationList] = useState<ApplicationListType[]>([]);
+  const [applicationList, setApplicationList] = useState<ApplicationType[]>([]);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [indicesExist, setIndicesExist] = useState(true);
   const [appConfigs, setAppConfigs] = useState<FilterType[]>([]);
@@ -145,7 +149,14 @@ export const Home = (props: HomeProps) => {
     setQueryWithStorage('');
   };
 
-  const createPanelForApp = (applicationId: string, appName: string) => {
+  const moveToApp = (id: string, type: string) => {
+    window.location.assign(`${last(parentBreadcrumbs)!.href}application_analytics/${id}`);
+    if (type === 'createSetAvailability') {
+      setTriggerSwitchToEvent(2);
+    }
+  };
+
+  const createPanelForApp = (applicationId: string, appName: string, type: string) => {
     return http
       .post(`${CUSTOM_PANELS_API_PREFIX}/panels`, {
         body: JSON.stringify({
@@ -154,7 +165,7 @@ export const Home = (props: HomeProps) => {
         }),
       })
       .then((res) => {
-        updateApp(applicationId, { panelId: res.newPanelId }, 'addPanel');
+        updateApp(applicationId, { panelId: res.newPanelId }, type);
       })
       .catch((err) => {
         setToast(
@@ -200,10 +211,10 @@ export const Home = (props: HomeProps) => {
       .get(`${APP_ANALYTICS_API_PREFIX}/`)
       .then(async (res) => {
         // Want to calculate availability going down the table
-        const mainVisIdStore: Record<string, string> = {};
+        const availabilityVisIdStore: Record<string, string> = {};
         for (let i = 0; i < res.data.length; i++) {
-          mainVisIdStore[res.data[i].id] = res.data[i].availability.mainVisId;
-          res.data[i].availability = { name: 'loading', color: '', mainVisId: '' };
+          availabilityVisIdStore[res.data[i].id] = res.data[i].availability.availabilityVisId;
+          res.data[i].availability = { name: '', color: 'loading', availabilityVisId: '' };
         }
         setApplicationList(res.data);
         for (let i = res.data.length - 1; i > -1; i--) {
@@ -211,12 +222,12 @@ export const Home = (props: HomeProps) => {
             http,
             pplService,
             res.data[i],
-            mainVisIdStore[res.data[i].id],
+            availabilityVisIdStore[res.data[i].id],
             () => {}
           );
           // Need to set state with new object to trigger re-render
           setApplicationList([
-            ...res.data.filter((app: ApplicationListType) => app.id !== res.data[i].id),
+            ...res.data.filter((app: ApplicationType) => app.id !== res.data[i].id),
             res.data[i],
           ]);
         }
@@ -228,7 +239,7 @@ export const Home = (props: HomeProps) => {
   };
 
   // Create a new application
-  const createApp = (application: ApplicationType) => {
+  const createApp = (application: ApplicationRequestType, type: string) => {
     const toast = isNameValid(
       application.name,
       applicationList.map((obj) => obj.name)
@@ -240,7 +251,7 @@ export const Home = (props: HomeProps) => {
 
     const requestBody = {
       name: application.name,
-      description: application.description,
+      description: application.description || '',
       baseQuery: application.baseQuery,
       servicesEntities: application.servicesEntities,
       traceGroups: application.traceGroups,
@@ -252,7 +263,7 @@ export const Home = (props: HomeProps) => {
         body: JSON.stringify(requestBody),
       })
       .then(async (res) => {
-        createPanelForApp(res.newAppId, application.name);
+        createPanelForApp(res.newAppId, application.name, type);
         setToast(`Application "${application.name}" successfully created!`);
         clearStorage();
       })
@@ -300,7 +311,11 @@ export const Home = (props: HomeProps) => {
   };
 
   // Update existing application
-  const updateApp = (appId: string, updateAppData: Partial<ApplicationType>, type: string) => {
+  const updateApp = (
+    appId: string,
+    updateAppData: Partial<ApplicationRequestType>,
+    type: string
+  ) => {
     const requestBody = {
       appId,
       updateBody: updateAppData,
@@ -314,11 +329,10 @@ export const Home = (props: HomeProps) => {
         if (type === 'update') {
           setToast('Application successfully updated.');
           clearStorage();
+          moveToApp(res.updatedAppId, type);
         }
-        if (type !== 'editAvailability') {
-          window.location.assign(
-            `${last(parentBreadcrumbs)!.href}application_analytics/${res.updatedAppId}`
-          );
+        if (type.startsWith('create')) {
+          moveToApp(res.updatedAppId, type);
         }
       })
       .catch((err) => {
@@ -355,6 +369,13 @@ export const Home = (props: HomeProps) => {
       });
   };
 
+  const callback = (childFunc: () => void) => {
+    if (childFunc && triggerSwitchToEvent > 0) {
+      childFunc();
+      setTriggerSwitchToEvent(triggerSwitchToEvent - 1);
+    }
+  };
+
   return (
     <div>
       <EuiGlobalToastList
@@ -377,6 +398,7 @@ export const Home = (props: HomeProps) => {
                 renameApplication={renameApp}
                 deleteApplication={deleteApp}
                 clearStorage={clearStorage}
+                moveToApp={moveToApp}
                 {...commonProps}
               />
             </ObservabilitySideBar>
@@ -412,6 +434,7 @@ export const Home = (props: HomeProps) => {
               notifications={notifications}
               setToasts={setToast}
               updateApp={updateApp}
+              callback={callback}
               {...commonProps}
             />
           )}

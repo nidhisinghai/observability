@@ -6,8 +6,13 @@
 import React, { useMemo } from 'react';
 import { take, isEmpty, last } from 'lodash';
 import { Plt } from '../../plotly/plot';
+<<<<<<< HEAD
 import { DefaultChartStyles, PLOTLY_COLOR } from '../../../../../common/constants/shared';
 import { hexToRgba } from '../../../../components/event_analytics/utils/utils';
+=======
+import { AvailabilityUnitType } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_availability';
+import { ThresholdUnitType } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_thresholds';
+>>>>>>> 3043a965913cf6e30e417b64327cb57ac1390212
 
 export const Line = ({ visualizations, layout, config }: any) => {
   const { DefaultMode, Interpolation, LineWidth, FillOpacity } = DefaultChartStyles;
@@ -16,7 +21,11 @@ export const Line = ({ visualizations, layout, config }: any) => {
     metadata: { fields },
   } = visualizations.data.rawVizData;
   const { defaultAxes } = visualizations.data;
-  const { dataConfig = {}, layoutConfig = {} } = visualizations?.data?.userConfigs;
+  const {
+    dataConfig = {},
+    layoutConfig = {},
+    availabilityConfig = {},
+  } = visualizations?.data?.userConfigs;
   const xaxis =
     dataConfig?.valueOptions && dataConfig.valueOptions.xaxis ? dataConfig.valueOptions.xaxis : [];
   const yaxis =
@@ -39,6 +48,7 @@ export const Line = ({ visualizations, layout, config }: any) => {
   }
 
   const [calculatedLayout, lineValues] = useMemo(() => {
+<<<<<<< HEAD
     const isBarMode = mode === 'bar';
 
     let calculatedLineValues = valueSeries.map((field: any, index: number) => {
@@ -54,6 +64,9 @@ export const Line = ({ visualizations, layout, config }: any) => {
         fill: 'tozeroy',
         fillcolor: fillColor,
       };
+=======
+    let calculatedLineValues = valueSeries.map((field: any) => {
+>>>>>>> 3043a965913cf6e30e417b64327cb57ac1390212
       return {
         x: data[!isEmpty(xaxis) ? xaxis[0]?.label : fields[lastIndex].name],
         y: data[field.name],
@@ -73,9 +86,12 @@ export const Line = ({ visualizations, layout, config }: any) => {
       };
     });
 
+<<<<<<< HEAD
     var layoutForBarMode = {
       barmode: 'group',
     };
+=======
+>>>>>>> 3043a965913cf6e30e417b64327cb57ac1390212
     const mergedLayout = {
       ...layout,
       ...layoutConfig.layout,
@@ -88,15 +104,18 @@ export const Line = ({ visualizations, layout, config }: any) => {
       ...isBarMode && layoutForBarMode,
     };
 
-    if (dataConfig.thresholds) {
+    if (dataConfig.thresholds || availabilityConfig.level) {
       const thresholdTraces = {
         x: [],
         y: [],
         mode: 'text',
         text: [],
       };
-      mergedLayout.shapes = [
-        ...dataConfig.thresholds.map((thr) => {
+      const thresholds = dataConfig.thresholds ? dataConfig.thresholds : [];
+      const levels = availabilityConfig.level ? availabilityConfig.level : [];
+
+      const mapToLine = (list: ThresholdUnitType[] | AvailabilityUnitType[], lineStyle: any) => {
+        return list.map((thr: ThresholdUnitType) => {
           thresholdTraces.x.push(
             data[!isEmpty(xaxis) ? xaxis[xaxis.length - 1]?.label : fields[lastIndex].name][0]
           );
@@ -112,11 +131,16 @@ export const Line = ({ visualizations, layout, config }: any) => {
             opacity: 0.7,
             line: {
               color: thr.color,
-              width: 4,
-              dash: 'dashdot',
+              width: 3,
+              ...lineStyle,
             },
           };
-        }),
+        });
+      };
+
+      mergedLayout.shapes = [
+        ...mapToLine(thresholds, { dash: 'dashdot' }),
+        ...mapToLine(levels, {}),
       ];
       calculatedLineValues = [...calculatedLineValues, thresholdTraces];
     }

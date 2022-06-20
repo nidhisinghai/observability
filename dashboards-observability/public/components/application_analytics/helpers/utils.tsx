@@ -5,7 +5,7 @@
 /* eslint-disable no-console */
 
 import { EuiDescriptionList, EuiSelectOption, EuiSpacer, EuiText } from '@elastic/eui';
-import { ApplicationListType, ApplicationType } from 'common/types/app_analytics';
+import { ApplicationType, AvailabilityType } from 'common/types/application_analytics';
 import { FilterType } from 'public/components/trace_analytics/components/common/filters/filters';
 import React, { Dispatch, ReactChild } from 'react';
 import { batch } from 'react-redux';
@@ -18,7 +18,10 @@ import { VisualizationType } from '../../../../common/types/custom_panels';
 import { NEW_SELECTED_QUERY_TAB, TAB_CREATED_TYPE } from '../../../../common/constants/explorer';
 import { APP_ANALYTICS_API_PREFIX } from '../../../../common/constants/application_analytics';
 import { HttpSetup } from '../../../../../../src/core/public';
-import { init as initFields, remove as removefields } from '../../event_analytics/redux/slices/field_slice';
+import {
+  init as initFields,
+  remove as removefields,
+} from '../../event_analytics/redux/slices/field_slice';
 import {
   init as initVisualizationConfig,
   reset as resetVisualizationConfig,
@@ -68,6 +71,7 @@ export const getListItem = (title: string, description: string | React.ReactElem
   return (
     <div key={`list-item-${title}`}>
       <EuiDescriptionList
+        data-test-subj={`${title}DescriptionList`}
         listItems={[
           {
             title: titleComponent,
@@ -95,18 +99,18 @@ export const fetchAppById = async (
 ) => {
   return http
     .get(`${APP_ANALYTICS_API_PREFIX}/${applicationId}`)
-    .then(async (res) => {
-      res.application.availabilityVisId = (
+    .then(async (res: ApplicationType) => {
+      res.availability.availabilityVisId = (
         await calculateAvailability(
           http,
           pplService,
-          res.application,
-          res.application.availabilityVisId,
+          res,
+          res.availability.availabilityVisId,
           setVisWithAvailability
         )
-      ).mainVisId;
-      setApplication(res.application);
-      const serviceFilters = res.application.servicesEntities.map((ser: string) => {
+      ).availabilityVisId;
+      setApplication(res);
+      const serviceFilters = res.servicesEntities.map((ser: string) => {
         return {
           field: 'serviceName',
           operator: 'is',
@@ -115,7 +119,7 @@ export const fetchAppById = async (
           disabled: false,
         };
       });
-      const traceFilters = res.application.traceGroups.map((tra: string) => {
+      const traceFilters = res.traceGroups.map((tra: string) => {
         return {
           field: 'traceGroup',
           operator: 'is',
@@ -189,11 +193,11 @@ export const fetchPanelsVizIdList = async (http: HttpSetup, appPanelId: string) 
 export const calculateAvailability = async (
   http: HttpSetup,
   pplService: PPLService,
-  application: ApplicationType | ApplicationListType,
+  application: ApplicationType,
   availabilityVisId: string,
   setVisWithAvailability: (visList: EuiSelectOption[]) => void
-): Promise<{ name: string; color: string; mainVisId: string }> => {
-  let availability = { name: '', color: '', mainVisId: '' };
+): Promise<AvailabilityType> => {
+  let availability = { name: '', color: '', availabilityVisId: '' };
   const panelId = application.panelId;
   if (!panelId) return availability;
   // Fetches saved visualizations associated to application's panel
@@ -203,15 +207,18 @@ export const calculateAvailability = async (
   const visWithAvailability = [];
   let availabilityFound = false;
   for (let i = 0; i < savedVisualizationsIds.length; i++) {
-    let hasAvailability = false;
     const visualizationId = savedVisualizationsIds[i];
     // Fetches data for visualization
     const visData = await fetchVisualizationById(http, visualizationId, (value: string) =>
       console.error(value)
     );
-    // If there are thresholds, we get the current value
-    if (visData.user_configs.dataConfig?.hasOwnProperty('thresholds')) {
-      const thresholds = visData.user_configs.dataConfig.thresholds.reverse();
+    // If there are levels, we get the current value
+    if (visData.user_configs.availabilityConfig?.hasOwnProperty('level')) {
+      // For every saved visualization with availability levels we push it to visWithAvailability
+      // This is used to populate the options in configuration
+      visWithAvailability.push({ value: visualizationId, text: visData.name });
+
+      const levels = visData.user_configs.availabilityConfig.level.reverse();
       let currValue = Number.MIN_VALUE;
       const finalQuery = preprocessQuery({
         rawQuery: visData.query,
@@ -235,73 +242,77 @@ export const calculateAvailability = async (
         .catch((err) => {
           console.error(err);
         });
-      // We check each threshold if it has expression which means it is an availability level
-      for (let j = 0; j < thresholds.length; j++) {
-        const threshold = thresholds[j];
-        if (threshold.hasOwnProperty('expression')) {
-          hasAvailability = true;
-          // If there is an availiabilityVisId selected we only want to compute availability based on that
-          if (availabilityVisId ? availabilityVisId === visualizationId : true) {
-            if (threshold.value !== null) {
-              if (!availabilityFound && threshold.expression) {
-                const expression = threshold.expression;
+      for (let j = 0; j < levels.length; j++) {
+        const level = levels[j];
+        // If there is an availiabilityVisId selected we only want to compute availability based on that
+        if (availabilityVisId ? availabilityVisId === visualizationId : true) {
+          if (level.value !== null) {
+            if (currValue === null) {
+              availability = {
+                name: '',
+                color: 'null',
+                availabilityVisId: '',
+              };
+            } else {
+              if (!availabilityFound) {
+                const expression = level.expression;
                 switch (expression) {
                   case '≥':
-                    if (currValue >= parseFloat(threshold.value)) {
+                    if (currValue >= parseFloat(level.value)) {
                       availability = {
-                        name: threshold.name,
-                        color: threshold.color,
-                        mainVisId: visualizationId,
+                        name: level.name,
+                        color: level.color,
+                        availabilityVisId: visualizationId,
                       };
                       availabilityFound = true;
                     }
                     break;
                   case '≤':
-                    if (currValue <= parseFloat(threshold.value)) {
+                    if (currValue <= parseFloat(level.value)) {
                       availability = {
-                        name: threshold.name,
-                        color: threshold.color,
-                        mainVisId: visualizationId,
+                        name: level.name,
+                        color: level.color,
+                        availabilityVisId: visualizationId,
                       };
                       availabilityFound = true;
                     }
                     break;
                   case '>':
-                    if (currValue > parseFloat(threshold.value)) {
+                    if (currValue > parseFloat(level.value)) {
                       availability = {
-                        name: threshold.name,
-                        color: threshold.color,
-                        mainVisId: visualizationId,
+                        name: level.name,
+                        color: level.color,
+                        availabilityVisId: visualizationId,
                       };
                       availabilityFound = true;
                     }
                     break;
                   case '<':
-                    if (currValue < parseFloat(threshold.value)) {
+                    if (currValue < parseFloat(level.value)) {
                       availability = {
-                        name: threshold.name,
-                        color: threshold.color,
-                        mainVisId: visualizationId,
+                        name: level.name,
+                        color: level.color,
+                        availabilityVisId: visualizationId,
                       };
                       availabilityFound = true;
                     }
                     break;
                   case '=':
-                    if (currValue === parseFloat(threshold.value)) {
+                    if (currValue === parseFloat(level.value)) {
                       availability = {
-                        name: threshold.name,
-                        color: threshold.color,
-                        mainVisId: visualizationId,
+                        name: level.name,
+                        color: level.color,
+                        availabilityVisId: visualizationId,
                       };
                       availabilityFound = true;
                     }
                     break;
                   case '≠':
-                    if (currValue !== parseFloat(threshold.value)) {
+                    if (currValue !== parseFloat(level.value)) {
                       availability = {
-                        name: threshold.name,
-                        color: threshold.color,
-                        mainVisId: visualizationId,
+                        name: level.name,
+                        color: level.color,
+                        availabilityVisId: visualizationId,
                       };
                       availabilityFound = true;
                     }
@@ -313,12 +324,10 @@ export const calculateAvailability = async (
         }
       }
     }
-    // For every saved visualization with availability levels we push it to visWithAvailability
-    if (hasAvailability) {
-      // This is used to populate the options in configuration
-      visWithAvailability.push({ value: visualizationId, text: visData.name });
-    }
   }
   setVisWithAvailability(visWithAvailability);
+  if (!availabilityFound && visWithAvailability.length > 0) {
+    return { name: '', color: 'undefined', availabilityVisId: '' };
+  }
   return availability;
 };

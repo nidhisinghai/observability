@@ -38,7 +38,7 @@ const moveToTestPanel = () => {
   cy.wait(delay);
 };
 let panelCount = 1;
-const panelName='TestPanel';
+const panelName = 'TestPanel';
 const createDummyPanel = () => {
   moveToPanelHome();
   cy.get('.euiButton__text').contains('Create panel').trigger('mouseover').click();
@@ -130,10 +130,10 @@ describe('Creating visualizations', () => {
   });
 });
 
-describe('Testing Operational Panel Home', ()=>{
+describe('Testing Operational Panel Home', () => {
    beforeEach(() => moveToPanelHome());
 
-   it('Operational Panels Empty Home Page', () =>{
+   it('Operational Panels Empty Home Page', () => {
      cy.get('.euiTitle.euiTitle--small').contains('Panels (0)');
      cy.get('.euiTextAlign').contains('No Operational Panels').should('exist');
    });
@@ -171,7 +171,7 @@ describe('Testing panels table', () => {
     cy.contains(TEST_PANEL).should('exist');
   });
 
-  it('Edit Button is Disabled when visualization is not added to Panel', ()=>{
+  it('Edit Button is Disabled when visualization is not added to Panel', () => {
     moveToTestPanel();
     cy.get('.euiTextAlign').contains('Start by adding your first visualization').should('exist');
     cy.get('button.euiButton-isDisabled').should('be.disabled');
@@ -592,11 +592,11 @@ describe('Clean up all test data', () => {
   });
 });
 
-describe('Verify Operational Panels Table', () =>{
+describe('Verify Operational Panels Table', () => {
   it('Add Dummy Data to Operational Panel and verify Table Column, Pagination and Rows Data ', () => {
-  for (let p = 0; p < 15 ; p++) { 
-  createDummyPanel(); 
-  }
+    for (let p = 0; p < 15 ; p++) {
+      createDummyPanel();
+    }
   cy.get('.euiTableCellContent__text').contains('Name').should('exist');
   cy.get('.euiTableCellContent__text').contains('Last updated').should('exist');
   cy.get('.euiTableCellContent__text').contains('Created').should('exist');

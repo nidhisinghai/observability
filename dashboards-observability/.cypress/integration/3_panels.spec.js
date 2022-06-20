@@ -608,7 +608,7 @@ describe('Verify Operational Panels Table', () => {
   cy.get('.euiTableCellContent--truncateText').contains('TestPanel12').should('exist');
   cy.get('.euiButtonEmpty__text').contains('Rows per page').click();
   cy.get('.euiContextMenuItem__text').contains('8 rows').click();
-  let expected_row_count=8;
+  let expected_row_count = 8;
   cy.get('.euiTable--auto')
   .find("tr")
   .then((row) => {

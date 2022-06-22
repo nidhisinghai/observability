@@ -80,3 +80,34 @@ export const APP_ANALYTICS_TAB_ID_REGEX = /application-analytics-tab.+/;
 export const DEFAULT_AVAILABILITY_QUERY = 'stats count() by span( timestamp, 1h )';
 
 export const VIZ_CONTAIN_XY_AXIS = [visChartTypes.Bar, visChartTypes.Histogram, visChartTypes.Line, visChartTypes.Pie];
+
+// default ppl aggregation method options
+export const AGGREGATION_OPTIONS = [
+  {
+    label: 'COUNT',
+  },
+  {
+    label: 'SUM',
+  },
+  {
+    label: 'AVERAGE',
+  },
+  {
+    label: 'MAX',
+  },
+  {
+    label: 'MIN',
+  },
+  {
+    label: 'VAR_SAMP',
+  },
+  {
+    label: 'VAR_POP',
+  },
+  {
+    label: 'STDDEV_SAMP',
+  },
+  {
+    label: 'STDDEV_POP',
+  },
+];

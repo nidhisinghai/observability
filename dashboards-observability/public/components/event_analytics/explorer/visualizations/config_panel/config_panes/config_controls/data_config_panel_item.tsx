@@ -59,24 +59,6 @@ export const DataConfigPanelItem = ({
     setConfigList(x);
   }
 
-  const onfieldOptionChange = (e, index: number, name: string) => {
-    let label = e.length > 0 ? e[0].label : '';
-    updateList(label, index, name, 'label');
-  };
-
-  const onAggregationChange = (e, index: number, name: string) => {
-    let label = e.length > 0 ? e[0].label : '';
-    updateList(label, index, name, 'aggregation');
-  };
-
-  const onCustomLabelChange = (e, index: number, name: string) => {
-    updateList(e.target.value, index, name, 'custom_label');
-  };
-
-  const handleSideChange = (id: string, index: number, name: string) => {
-    updateList(id, index, name, 'side');
-  }
-
   const handleServiceRemove = (index: number, name: string) => {
     const list = { ...configList };
     const arr = [...list[name]];
@@ -126,7 +108,7 @@ export const DataConfigPanelItem = ({
                 singleSelection={{ asPlainText: true }}
                 options={AGGREGATION_OPTIONS}
                 selectedOptions={singleField.aggregation ? [{ 'label': singleField.aggregation }] : []}
-                onChange={(e) => onAggregationChange(e, index, sectionName)}
+                onChange={(e) => updateList(e.length > 0 ? e[0].label : '', index, sectionName, 'aggregation')}
               />
 
             </EuiFormRow>
@@ -139,7 +121,7 @@ export const DataConfigPanelItem = ({
                 singleSelection={{ asPlainText: true }}
                 options={fieldOptionList}
                 selectedOptions={singleField.label ? [{ 'label': singleField.label }] : []}
-                onChange={(e) => onfieldOptionChange(e, index, sectionName)}
+                onChange={(e) => updateList(e.length > 0 ? e[0].label : '', index, sectionName, 'label')}
               />
             </EuiFormRow>
 
@@ -149,7 +131,7 @@ export const DataConfigPanelItem = ({
               <EuiFieldText
                 placeholder="Custom label"
                 value={singleField.custom_label}
-                onChange={(e) => onCustomLabelChange(e, index, sectionName)}
+                onChange={(e) => updateList(e.target.value, index, sectionName, 'custom_label')}
                 aria-label="Use aria labels when no actual label is in use" />
             </EuiFormRow>
 
@@ -159,7 +141,7 @@ export const DataConfigPanelItem = ({
                   legend="Side"
                   groupOptions={[{ id: 'left', label: 'Left' }, { id: 'right', label: 'Right' }]}
                   idSelected={index === 0 ? 'left' : singleField.side || "right"}
-                  handleButtonChange={(id: string) => handleSideChange(id, index, sectionName)}
+                  handleButtonChange={(id: string) => updateList(id, index, sectionName, 'side')}
                 />
               </EuiFormRow>
             )}

@@ -72,7 +72,7 @@ export const ExplorerVisualizations = ({
             </div>
           </EuiResizablePanel>
           <EuiResizableButton />
-          <EuiResizablePanel mode="main" initialSize={15} minSize="240px" style={{ border: "1px solid #D3DAE6", padding: '0px' }}>
+          <EuiResizablePanel mode="collapsible" initialSize={15} minSize="240px" style={{ border: "1px solid #D3DAE6", padding: '0px' }}>
             <div className="">
               <DataConfigPanelItem
                 fieldOptionList={fieldOptionList}
@@ -83,7 +83,7 @@ export const ExplorerVisualizations = ({
           </EuiResizablePanel>
 
           <EuiResizableButton />
-          <EuiResizablePanel initialSize={65} minSize="30%">
+          <EuiResizablePanel initialSize={65} minSize="30%"  mode="main">
             <WorkspacePanel
               curVisId={curVisId}
               setCurVisId={setCurVisId}

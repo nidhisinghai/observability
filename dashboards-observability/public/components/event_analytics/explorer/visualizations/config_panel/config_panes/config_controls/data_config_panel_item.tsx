@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { render as renderExplorerVis } from '../../../../../../event_analytics/redux/slices/visualization_slice';
 import { selectExplorerVisualization } from '../../../../../../event_analytics/redux/slices/visualization_slice';
 import { AGGREGATION_OPTIONS } from '../../../../../../../../common/constants/explorer';
+import { ButtonGroupItem } from './config_button_group';
 
 export const DataConfigPanelItem = ({
   fieldOptionList,
@@ -17,14 +18,17 @@ export const DataConfigPanelItem = ({
 }: any) => {
   const dispatch = useDispatch();
   const explorerVisualizations = useSelector(selectExplorerVisualization)[tabID];
-  const [configList, setConfigList] = useState({
-    dimensions: [{ label: "", aggregation: "", custom_label: "", name: "" }],
-    metrics: [{ label: "", aggregation: "", custom_label: "", name: "" }],
-  });
 
   const { data } = visualizations;
   const { data: vizData = {}, metadata: { fields = [] } = {} } = data?.rawVizData;
-  const updateList = (value, index: number, name: string, field: string) => {
+
+  const { xaxis, yaxis } = data.defaultAxes;
+  let [configList, setConfigList] = useState({
+    dimensions: [...xaxis],
+    metrics: [...yaxis],
+  });
+
+  const updateList = (value: string, index: number, name: string, field: string) => {
     let list = { ...configList };
     let listItem = list[name][index];
     listItem = { ...listItem, [field]: value };
@@ -121,6 +125,18 @@ export const DataConfigPanelItem = ({
                 onChange={(e) => onCustomLabelChange(e, index, sectionName)}
                 aria-label="Use aria labels when no actual label is in use" />
             </EuiFormRow>
+
+            {sectionName === 'metrics' && (
+              <EuiFormRow label="Side">
+                <ButtonGroupItem
+                  legend="Side"
+                  groupOptions={[{ id: 'left', label: 'Left' }, { id: 'right', label: 'Right' }]}
+                  idSelected="left"
+                  handleButtonChange={(id: string) => { console.log(id); }}
+                />
+              </EuiFormRow>
+            )}
+
             <EuiSpacer size="s" />
             {lists.length - 1 === index &&
               <EuiFlexItem grow={true}>

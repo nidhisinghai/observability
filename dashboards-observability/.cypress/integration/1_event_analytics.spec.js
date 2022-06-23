@@ -19,7 +19,9 @@ import {
   landOnEventVisualizations,
   landOnPanels,
   renderTreeMapchart,
-  renderPieChart
+  renderPieChart,
+  renderLineChart,
+  renderDataConfig
 } from '../utils/event_constants';
 import { supressResizeObserverIssue } from '../utils/constants';
 
@@ -652,10 +654,10 @@ describe('Renders chart and verify Toast message if X-axis and Y-axis values are
       .type('Bar')
       .type('{enter}');
     cy.wait(delay);
-    cy.get('#configPanel__value_options [data-test-subj="comboBoxClearButton"]').eq(0).click({force:true});
+    cy.get('#configPanel__value_options [data-test-subj="comboBoxClearButton"]').eq(0).click({ force: true });
     cy.get('#configPanel__value_options [data-test-subj="comboBoxToggleListButton"]').eq(0).click();
     cy.wait(delay)
-    cy.get('#configPanel__value_options [data-test-subj="comboBoxClearButton"]').click({multiple:true});
+    cy.get('#configPanel__value_options [data-test-subj="comboBoxClearButton"]').click({ multiple: true });
     cy.get('#configPanel__value_options [data-test-subj="comboBoxToggleListButton"]').eq(1).click();
     cy.get('#configPanel__value_options [data-test-subj="comboBoxInput"]').eq(0).should('have.value', '');
     cy.get('#configPanel__value_options [data-test-subj="comboBoxInput"]').eq(1).should('have.value', '');
@@ -669,10 +671,10 @@ describe('Renders chart and verify Toast message if X-axis and Y-axis values are
       .type('Bar')
       .type('{enter}');
     cy.wait(delay);
-    cy.get('#configPanel__value_options [data-test-subj="comboBoxClearButton"]').eq(0).click({force:true});
+    cy.get('#configPanel__value_options [data-test-subj="comboBoxClearButton"]').eq(0).click({ force: true });
     cy.get('#configPanel__value_options [data-test-subj="comboBoxToggleListButton"]').eq(0).click();
     cy.wait(delay)
-    cy.get('#configPanel__value_options [data-test-subj="comboBoxClearButton"]').click({multiple:true});
+    cy.get('#configPanel__value_options [data-test-subj="comboBoxClearButton"]').click({ multiple: true });
     cy.get('#configPanel__value_options [data-test-subj="comboBoxInput"]').eq(0).should('have.value', '');
     cy.get('#configPanel__value_options [data-test-subj="comboBoxInput"]').eq(1).should('have.value', '');
     cy.get('[data-test-subj="eventExplorer__saveManagementPopover"]').click();
@@ -697,7 +699,7 @@ describe('Renders Tree Map', () => {
   });
 
   it('Renders Tree Map, add value parameters and verify Reset button click is working', () => {
-   renderTreeMapchart();
+    renderTreeMapchart();
     cy.get('.euiFlexItem.euiFlexItem--flexGrowZero .euiButton__text').eq(2).click();
     cy.get('[data-test-subj="visualizeEditorResetButton"]').click();
     cy.get('#configPanel__panelOptions .euiFieldText').should('have.value', '');
@@ -714,8 +716,8 @@ describe('Renders Tree Map', () => {
     cy.wait(delay * 4);
     deleteVisualization();
   });
-  
-  it('Render Tree Map chart and verify color theme under Chart styles options', () =>{
+
+  it('Render Tree Map chart and verify color theme under Chart styles options', () => {
     renderTreeMapchart();
     cy.get('.euiTitle.euiTitle--xxsmall').contains('Color Theme').should('exist');
     cy.get('.euiSuperSelectControl').contains('Default').click();
@@ -746,16 +748,16 @@ describe('Renders Tree Map', () => {
     cy.get('.euiSuperSelectControl').click();
     cy.get('.euiColorPalettePicker__itemTitle').eq(1).contains('Reds').click();
     cy.get('.euiButton__text').contains('Preview').should('exist').click();
-    cy.get('.slicetext[data-unformatted="US"]').click({force:true});
+    cy.get('.slicetext[data-unformatted="US"]').click({ force: true });
     cy.wait(delay);
-    cy.get('.slicetext[data-unformatted*="Cleveland"]').click({force:true});
+    cy.get('.slicetext[data-unformatted*="Cleveland"]').click({ force: true });
     cy.get('text.slicetext').contains('100% of entry').should('exist');
-    cy.get('.pathbar.cursor-pointer .slicetext[data-unformatted="US"]').click({force:true});
+    cy.get('.pathbar.cursor-pointer .slicetext[data-unformatted="US"]').click({ force: true });
     cy.wait(delay);
-    cy.get('.pathbar.cursor-pointer .slicetext[data-unformatted=" "]').click({force:true});
+    cy.get('.pathbar.cursor-pointer .slicetext[data-unformatted=" "]').click({ force: true });
   });
 
-  it('"No results found" message when user fails to select proper fields', () =>{
+  it('"No results found" message when user fails to select proper fields', () => {
     querySearch(TEST_QUERIES[5].query, TEST_QUERIES[5].dateRangeDOM);
     cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').type('Tree Map').type('{enter}');
     cy.get('#configPanel__panelOptions .euiFieldText').click().type('Tree Map');
@@ -770,7 +772,7 @@ describe('Renders Tree Map', () => {
     cy.get('.euiTextColor.euiTextColor--subdued').contains('No results found').should('exist');
   });
 
-  it('Verify multicolored option under color theme',() =>{
+  it('Verify multicolored option under color theme', () => {
     renderTreeMapchart();
     cy.get('.euiTitle.euiTitle--xxsmall').contains('Color Theme').should('exist');
     cy.get('.euiSuperSelectControl').contains('Default').click();
@@ -815,82 +817,82 @@ describe('Renders Tree Map', () => {
 });
 
 describe('Render Pie chart for Legend and single color contrast change', () => {
-    beforeEach(() => {
-      landOnEventVisualizations();
-    });
+  beforeEach(() => {
+    landOnEventVisualizations();
+  });
   it('Render Pie chart and verify legends for Position Right and Bottom', () => {
     renderPieChart();
-describe('Render line chart for value options ', () => {
-  beforeEach(() => {
-    landOnEventVisualizations();
-    querySearch(TEST_QUERIES[5].query, TEST_QUERIES[5].dateRangeDOM);
-    cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').click();
-    cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').type('Line').type('{enter}')
-  });
+    describe('Render line chart for value options ', () => {
+      beforeEach(() => {
+        landOnEventVisualizations();
+        querySearch(TEST_QUERIES[5].query, TEST_QUERIES[5].dateRangeDOM);
+        cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').click();
+        cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').type('Line').type('{enter}')
+      });
 
-  it('Render line chart and add value Options ', () => {
-    cy.get('#configPanel__panelOptions .euiFieldText').click().type('Line Chart');
-    cy.get('.euiFlexItem .euiFormRow [placeholder="Description"]').click().type('This is the description for Line chart with value adding Parameter');
-    cy.get('.euiComboBox__inputWrap.euiComboBox__inputWrap-isClearable').eq(1).click();
-    cy.get('.euiComboBoxOption__content').eq(0).click();
-    cy.get('.euiComboBox__inputWrap.euiComboBox__inputWrap-isClearable').eq(2).click();
-    cy.get('.euiComboBoxOption__content').eq(0).click();
-    cy.get('[data-test-subj="visualizeEditorRenderButton"]').click({ force: true });
-    cy.get('.nsewdrag.drag.cursor-pointer').should('be.visible')
-  });
-});
+      it('Render line chart and add value Options ', () => {
+        cy.get('#configPanel__panelOptions .euiFieldText').click().type('Line Chart');
+        cy.get('.euiFlexItem .euiFormRow [placeholder="Description"]').click().type('This is the description for Line chart with value adding Parameter');
+        cy.get('.euiComboBox__inputWrap.euiComboBox__inputWrap-isClearable').eq(1).click();
+        cy.get('.euiComboBoxOption__content').eq(0).click();
+        cy.get('.euiComboBox__inputWrap.euiComboBox__inputWrap-isClearable').eq(2).click();
+        cy.get('.euiComboBoxOption__content').eq(0).click();
+        cy.get('[data-test-subj="visualizeEditorRenderButton"]').click({ force: true });
+        cy.get('.nsewdrag.drag.cursor-pointer').should('be.visible')
+      });
+    });
 
-describe('Render line chart for Legend ', () => {
-  beforeEach(() => {
-    cy.wait(2000);
-    landOnEventVisualizations();
-    querySearch(TEST_QUERIES[5].query, TEST_QUERIES[5].dateRangeDOM);
-    cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').click();
-    cy.get('[data-test-subj="comboBoxOptionsList "] button span').contains('Line').click();
-  });
+    describe('Render line chart for Legend ', () => {
+      beforeEach(() => {
+        cy.wait(2000);
+        landOnEventVisualizations();
+        querySearch(TEST_QUERIES[5].query, TEST_QUERIES[5].dateRangeDOM);
+        cy.get('[data-test-subj="configPane__vizTypeSelector"] [data-test-subj="comboBoxInput"]').click();
+        cy.get('[data-test-subj="comboBoxOptionsList "] button span').contains('Line').click();
+      });
 
-  it('Render line chart and verify legends for Show and Hidden', () => {
-    cy.get('[data-text="Show"]').should('have.text', 'Show');
-    cy.get('[data-text="Show"] [data-test-subj="show"]').should('have.attr', 'checked');
-    cy.get('[data-text="Hidden"]').should('have.text', 'Hidden').click();
-    cy.get('[data-text="Hidden"] [data-test-subj="hidden"]').should('not.have.attr', 'checked');
-    cy.get('[data-test-subj="visualizeEditorRenderButton"]').click({ force: true });
-    cy.wait(delay);
-    cy.get('.nsewdrag.drag.cursor-pointer').should('be.visible')
-      .and(chart => {
-        expect(chart.height()).to.be.greaterThan(200)
-      })
-  });
+      it('Render line chart and verify legends for Show and Hidden', () => {
+        cy.get('[data-text="Show"]').should('have.text', 'Show');
+        cy.get('[data-text="Show"] [data-test-subj="show"]').should('have.attr', 'checked');
+        cy.get('[data-text="Hidden"]').should('have.text', 'Hidden').click();
+        cy.get('[data-text="Hidden"] [data-test-subj="hidden"]').should('not.have.attr', 'checked');
+        cy.get('[data-test-subj="visualizeEditorRenderButton"]').click({ force: true });
+        cy.wait(delay);
+        cy.get('.nsewdrag.drag.cursor-pointer').should('be.visible')
+          .and(chart => {
+            expect(chart.height()).to.be.greaterThan(200)
+          })
+      });
 
-  it('Render line chart and verify legends for Position Right and Bottom', () => {
-    cy.get('[data-text="Right"]').should('have.text', 'Right');
-    cy.get('[data-text="Right"] [data-test-subj="v"]').should('have.attr', 'checked');
-    cy.get('[data-text="Bottom"]').should('have.text', 'Bottom').click();
-    cy.get('[data-text="Bottom"] [data-test-subj="h"]').should('not.have.attr', 'checked');
-    cy.get('[data-test-subj="visualizeEditorRenderButton"]').click({ force: true });
-  });
+      it('Render line chart and verify legends for Position Right and Bottom', () => {
+        cy.get('[data-text="Right"]').should('have.text', 'Right');
+        cy.get('[data-text="Right"] [data-test-subj="v"]').should('have.attr', 'checked');
+        cy.get('[data-text="Bottom"]').should('have.text', 'Bottom').click();
+        cy.get('[data-text="Bottom"] [data-test-subj="h"]').should('not.have.attr', 'checked');
+        cy.get('[data-test-subj="visualizeEditorRenderButton"]').click({ force: true });
+      });
 
-  it('Render Pie chart and verify legends for Show and Hidden', () => {
-    renderPieChart();
-    cy.get('[data-text="Show"]').should('have.text', 'Show');
-    cy.get('[data-text="Show"] [data-test-subj="show"]').should('have.attr', 'checked');
-    cy.get('[data-text="Hidden"]').should('have.text', 'Hidden').click();
-    cy.get('[data-text="Hidden"] [data-test-subj="hidden"]').should('not.have.attr', 'checked');
-    cy.get('[data-test-subj="visualizeEditorRenderButton"]').click({ force: true });
-  });
+      it('Render Pie chart and verify legends for Show and Hidden', () => {
+        renderPieChart();
+        cy.get('[data-text="Show"]').should('have.text', 'Show');
+        cy.get('[data-text="Show"] [data-test-subj="show"]').should('have.attr', 'checked');
+        cy.get('[data-text="Hidden"]').should('have.text', 'Hidden').click();
+        cy.get('[data-text="Hidden"] [data-test-subj="hidden"]').should('not.have.attr', 'checked');
+        cy.get('[data-test-subj="visualizeEditorRenderButton"]').click({ force: true });
+      });
 
-  it('Renders Pie chart with single color', () => {
-    renderPieChart();
-    cy.get('.euiIEFlexWrapFix').eq(3).contains('Chart Styles').should('exist');
-    cy.get('[data-test-subj="comboBoxInput"]').eq(3).click();
-    cy.get('[name="Pie"]').click();
-    cy.get('.euiSuperSelectControl').click();
-    cy.get('.euiContextMenuItem.euiSuperSelect__item.euiSuperSelect__item--hasDividers').eq(1).click();
-    cy.get('.euiFlexItem.euiFlexItem--flexGrowZero .euiButton__text').eq(2).click();
-    cy.wait(delay);
+      it('Renders Pie chart with single color', () => {
+        renderPieChart();
+        cy.get('.euiIEFlexWrapFix').eq(3).contains('Chart Styles').should('exist');
+        cy.get('[data-test-subj="comboBoxInput"]').eq(3).click();
+        cy.get('[name="Pie"]').click();
+        cy.get('.euiSuperSelectControl').click();
+        cy.get('.euiContextMenuItem.euiSuperSelect__item.euiSuperSelect__item--hasDividers').eq(1).click();
+        cy.get('.euiFlexItem.euiFlexItem--flexGrowZero .euiButton__text').eq(2).click();
+        cy.wait(delay);
+      });
+    });
   });
-});
-});
 });
 
 describe('Render line chart for Chart Styles ', () => {
@@ -1030,5 +1032,12 @@ describe('Render line chart for Chart Styles ', () => {
       .trigger('change')
     cy.get('.euiRangeSlider').eq(2).should('have.value', 20)
     cy.get('[data-test-subj="visualizeEditorRenderButton"]').click({ force: true });
+  });
+});
+
+describe('Render Time series chart/Line chart and verify Data configurations UI ', () => {
+  it('Render line chart and verify Data Configuration Panel', () => {
+    renderLineChart();
+    renderDataConfig();
   });
 });

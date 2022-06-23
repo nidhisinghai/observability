@@ -179,19 +179,20 @@ export const DataTable = ({ visualizations, layout, config }: any) => {
         columns={columns}
         columnVisibility={columnVisibility}
       />
-      <div style={{ height: GRID_HEIGHT }}>
+      {/* <div style={{ maxHeight: "600px", overflowY: "auto" }}> */}
         <AgGridReact
           ref={gridRef}
           rowData={raw_data}
           columnDefs={columns}
           defaultColDef={defaultColDef}
+          domLayout='autoHeight'
           animateRows
           pagination
           paginationPageSize={pageSize}
           suppressPaginationPanel
           rowHeight={selectedRowDensity.height}
         />
-      </div>
+      {/* </div> */}
       <GridFooter
         onPageSizeChanged={onPageSizeChanged}
         pageSize={pageSize}
@@ -203,19 +204,20 @@ export const DataTable = ({ visualizations, layout, config }: any) => {
         <CustomOverlay>
           <EuiFlexGroup direction="column">
             <EuiFlexItem>
-              <div style={{ height: GRID_HEIGHT_FULLSCREEN }}>
+              {/* <div style={{ height: GRID_HEIGHT_FULLSCREEN }}> */}
                 <AgGridReact
                   ref={gridRefFullScreen}
                   rowData={raw_data}
                   columnDefs={columns}
                   defaultColDef={defaultColDef}
+                  domLayout='autoHeight'
                   animateRows
                   pagination
                   paginationPageSize={pageSize}
                   suppressPaginationPanel
                   rowHeight={selectedRowDensity.height}
                 />
-              </div>
+              {/* </div> */}
             </EuiFlexItem>
             <EuiFlexItem>
               <GridFooter

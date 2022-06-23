@@ -46,34 +46,43 @@ export const DataConfigPanelItem = ({
 
   const updateList = (value: string, index: number, name: string, field: string) => {
     let list = { ...configList };
-    let listItem = list[name][index];
+    let listItem = { ...list[name][index] };
     listItem = { ...listItem, [field]: value };
-    list[name][index] = listItem;
-    setConfigList(list);
+    const x = {
+      ...list,
+      [name]: [
+        ...list[name].slice(0, index),
+        listItem,
+        ...list[name].slice(index + 1, list[name].length),
+      ],
+    };
+    setConfigList(x);
   }
 
   const onfieldOptionChange = (e, index: number, name: string) => {
-    updateList(e[0].label, index, name, 'label');
-    updateList(e[0].label, index, name, 'name');
+    let label = e.length > 0 ? e[0].label : '';
+    updateList(label, index, name, 'label');
   };
 
   const onAggregationChange = (e, index: number, name: string) => {
-    updateList(e[0].label, index, name, 'aggregation');
+    let label = e.length > 0 ? e[0].label : '';
+    updateList(label, index, name, 'aggregation');
   };
 
   const onCustomLabelChange = (e, index: number, name: string) => {
     updateList(e.target.value, index, name, 'custom_label');
   };
 
-  const handleSideChange = (id, value, index: number, name: string) => {
-    console.log("id:", id, 'value', value)
+  const handleSideChange = (id: string, index: number, name: string) => {
     updateList(id, index, name, 'side');
   }
 
   const handleServiceRemove = (index: number, name: string) => {
     const list = { ...configList };
-    list[name].splice(index, 1);
-    setConfigList(list);
+    const arr = [...list[name]];
+    arr.splice(index, 1);
+    const y = { ...list, [name]: arr }
+    setConfigList(y);
   };
 
   const handleServiceAdd = (name: string) => {
@@ -149,8 +158,8 @@ export const DataConfigPanelItem = ({
                 <ButtonGroupItem
                   legend="Side"
                   groupOptions={[{ id: 'left', label: 'Left' }, { id: 'right', label: 'Right' }]}
-                  idSelected="left"
-                  handleButtonChange={(id: string) => handleSideChange(id, value, index, sectionName)}
+                  idSelected={index === 0 ? 'left' : singleField.side || "right"}
+                  handleButtonChange={(id: string) => handleSideChange(id, index, sectionName)}
                 />
               </EuiFormRow>
             )}

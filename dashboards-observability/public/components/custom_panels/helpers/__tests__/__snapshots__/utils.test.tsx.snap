@@ -938,26 +938,6 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                 "sections": Array [
                   Object {
                     "editor": [Function],
-                    "id": "value_options",
-                    "mapTo": "valueOptions",
-                    "name": "Value options",
-                    "schemas": Array [
-                      Object {
-                        "component": null,
-                        "isSingleSelection": true,
-                        "mapTo": "xaxis",
-                        "name": "X-axis",
-                      },
-                      Object {
-                        "component": null,
-                        "isSingleSelection": false,
-                        "mapTo": "yaxis",
-                        "name": "Y-axis",
-                      },
-                    ],
-                  },
-                  Object {
-                    "editor": [Function],
                     "id": "legend",
                     "mapTo": "legend",
                     "name": "Legend",
@@ -1289,26 +1269,6 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                   "mapTo": "dataConfig",
                   "name": "Data",
                   "sections": Array [
-                    Object {
-                      "editor": [Function],
-                      "id": "value_options",
-                      "mapTo": "valueOptions",
-                      "name": "Value options",
-                      "schemas": Array [
-                        Object {
-                          "component": null,
-                          "isSingleSelection": true,
-                          "mapTo": "xaxis",
-                          "name": "X-axis",
-                        },
-                        Object {
-                          "component": null,
-                          "isSingleSelection": false,
-                          "mapTo": "yaxis",
-                          "name": "Y-axis",
-                        },
-                      ],
-                    },
                     Object {
                       "editor": [Function],
                       "id": "legend",
@@ -1698,26 +1658,6 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                     "sections": Array [
                       Object {
                         "editor": [Function],
-                        "id": "value_options",
-                        "mapTo": "valueOptions",
-                        "name": "Value options",
-                        "schemas": Array [
-                          Object {
-                            "component": null,
-                            "isSingleSelection": true,
-                            "mapTo": "xaxis",
-                            "name": "X-axis",
-                          },
-                          Object {
-                            "component": null,
-                            "isSingleSelection": false,
-                            "mapTo": "yaxis",
-                            "name": "Y-axis",
-                          },
-                        ],
-                      },
-                      Object {
-                        "editor": [Function],
                         "id": "legend",
                         "mapTo": "legend",
                         "name": "Legend",
@@ -2049,6 +1989,16 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                 "showgrid": false,
                 "visible": true,
               },
+              "yaxis1": Object {
+                "overlaying": "y",
+                "side": "left",
+                "tickfont": Object {
+                  "color": "#3CA1C7",
+                },
+                "titlefont": Object {
+                  "color": "#3CA1C7",
+                },
+              },
             }
           }
         >
@@ -2142,6 +2092,16 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                   "fixedrange": true,
                   "showgrid": false,
                   "visible": true,
+                },
+                "yaxis1": Object {
+                  "overlaying": "y",
+                  "side": "left",
+                  "tickfont": Object {
+                    "color": "#3CA1C7",
+                  },
+                  "titlefont": Object {
+                    "color": "#3CA1C7",
+                  },
                 },
               }
             }

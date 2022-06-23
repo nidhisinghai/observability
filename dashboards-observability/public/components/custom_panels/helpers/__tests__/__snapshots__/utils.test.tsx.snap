@@ -958,36 +958,156 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                   },
                   Object {
                     "editor": [Function],
-                    "id": "chart_options",
-                    "mapTo": "chartOptions",
-                    "name": "Chart options",
+                    "id": "legend",
+                    "mapTo": "legend",
+                    "name": "Legend",
                     "schemas": Array [
                       Object {
                         "component": null,
-                        "isSingleSelection": true,
-                        "mapTo": "mode",
+                        "mapTo": "showLegend",
+                        "name": "Show Legend",
+                        "props": Object {
+                          "defaultSelections": Array [
+                            Object {
+                              "id": "show",
+                              "name": "Show",
+                            },
+                          ],
+                          "options": Array [
+                            Object {
+                              "id": "show",
+                              "name": "Show",
+                            },
+                            Object {
+                              "id": "hidden",
+                              "name": "Hidden",
+                            },
+                          ],
+                        },
+                      },
+                      Object {
+                        "component": null,
+                        "mapTo": "position",
+                        "name": "Position",
+                        "props": Object {
+                          "defaultSelections": Array [
+                            Object {
+                              "id": "v",
+                              "name": "Right",
+                            },
+                          ],
+                          "options": Array [
+                            Object {
+                              "id": "v",
+                              "name": "Right",
+                            },
+                            Object {
+                              "id": "h",
+                              "name": "Bottom",
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  Object {
+                    "editor": [Function],
+                    "id": "chart_styles",
+                    "mapTo": "chartStyles",
+                    "name": "Chart styles",
+                    "schemas": Array [
+                      Object {
+                        "component": [Function],
+                        "eleType": "buttons",
+                        "mapTo": "style",
                         "name": "Mode",
                         "props": Object {
                           "defaultSelections": Array [
                             Object {
-                              "modeId": "lines",
+                              "id": "lines",
                               "name": "Lines",
                             },
                           ],
-                          "dropdownList": Array [
+                          "options": Array [
                             Object {
-                              "modeId": "markers",
-                              "name": "Markers",
-                            },
-                            Object {
-                              "modeId": "lines",
+                              "id": "lines",
                               "name": "Lines",
                             },
                             Object {
-                              "modeId": "lines+markers",
-                              "name": "Lines + Markers",
+                              "id": "bar",
+                              "name": "Bars",
+                            },
+                            Object {
+                              "id": "markers",
+                              "name": "Points",
+                            },
+                            Object {
+                              "id": "lines+markers",
+                              "name": "Lines + Points",
                             },
                           ],
+                        },
+                      },
+                      Object {
+                        "component": [Function],
+                        "eleType": "buttons",
+                        "mapTo": "interpolation",
+                        "name": "Interpolation",
+                        "props": Object {
+                          "defaultSelections": Array [
+                            Object {
+                              "id": "spline",
+                              "name": "Smooth",
+                            },
+                          ],
+                          "options": Array [
+                            Object {
+                              "id": "linear",
+                              "name": "Linear",
+                            },
+                            Object {
+                              "id": "spline",
+                              "name": "Smooth",
+                            },
+                            Object {
+                              "id": "hv",
+                              "name": "Step before",
+                            },
+                            Object {
+                              "id": "vh",
+                              "name": "Step after",
+                            },
+                          ],
+                        },
+                      },
+                      Object {
+                        "component": [Function],
+                        "defaultState": 2,
+                        "eleType": "slider",
+                        "mapTo": "lineWidth",
+                        "name": "Line width",
+                        "props": Object {
+                          "max": 10,
+                        },
+                      },
+                      Object {
+                        "component": [Function],
+                        "defaultState": 40,
+                        "eleType": "slider",
+                        "mapTo": "fillOpacity",
+                        "name": "Fill Opacity",
+                        "props": Object {
+                          "max": 100,
+                        },
+                      },
+                      Object {
+                        "component": [Function],
+                        "defaultState": 5,
+                        "eleType": "slider",
+                        "mapTo": "pointSize",
+                        "name": "Point Size",
+                        "props": Object {
+                          "max": 40,
                         },
                       },
                     ],
@@ -1191,36 +1311,156 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                     },
                     Object {
                       "editor": [Function],
-                      "id": "chart_options",
-                      "mapTo": "chartOptions",
-                      "name": "Chart options",
+                      "id": "legend",
+                      "mapTo": "legend",
+                      "name": "Legend",
                       "schemas": Array [
                         Object {
                           "component": null,
-                          "isSingleSelection": true,
-                          "mapTo": "mode",
+                          "mapTo": "showLegend",
+                          "name": "Show Legend",
+                          "props": Object {
+                            "defaultSelections": Array [
+                              Object {
+                                "id": "show",
+                                "name": "Show",
+                              },
+                            ],
+                            "options": Array [
+                              Object {
+                                "id": "show",
+                                "name": "Show",
+                              },
+                              Object {
+                                "id": "hidden",
+                                "name": "Hidden",
+                              },
+                            ],
+                          },
+                        },
+                        Object {
+                          "component": null,
+                          "mapTo": "position",
+                          "name": "Position",
+                          "props": Object {
+                            "defaultSelections": Array [
+                              Object {
+                                "id": "v",
+                                "name": "Right",
+                              },
+                            ],
+                            "options": Array [
+                              Object {
+                                "id": "v",
+                                "name": "Right",
+                              },
+                              Object {
+                                "id": "h",
+                                "name": "Bottom",
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                    Object {
+                      "editor": [Function],
+                      "id": "chart_styles",
+                      "mapTo": "chartStyles",
+                      "name": "Chart styles",
+                      "schemas": Array [
+                        Object {
+                          "component": [Function],
+                          "eleType": "buttons",
+                          "mapTo": "style",
                           "name": "Mode",
                           "props": Object {
                             "defaultSelections": Array [
                               Object {
-                                "modeId": "lines",
+                                "id": "lines",
                                 "name": "Lines",
                               },
                             ],
-                            "dropdownList": Array [
+                            "options": Array [
                               Object {
-                                "modeId": "markers",
-                                "name": "Markers",
-                              },
-                              Object {
-                                "modeId": "lines",
+                                "id": "lines",
                                 "name": "Lines",
                               },
                               Object {
-                                "modeId": "lines+markers",
-                                "name": "Lines + Markers",
+                                "id": "bar",
+                                "name": "Bars",
+                              },
+                              Object {
+                                "id": "markers",
+                                "name": "Points",
+                              },
+                              Object {
+                                "id": "lines+markers",
+                                "name": "Lines + Points",
                               },
                             ],
+                          },
+                        },
+                        Object {
+                          "component": [Function],
+                          "eleType": "buttons",
+                          "mapTo": "interpolation",
+                          "name": "Interpolation",
+                          "props": Object {
+                            "defaultSelections": Array [
+                              Object {
+                                "id": "spline",
+                                "name": "Smooth",
+                              },
+                            ],
+                            "options": Array [
+                              Object {
+                                "id": "linear",
+                                "name": "Linear",
+                              },
+                              Object {
+                                "id": "spline",
+                                "name": "Smooth",
+                              },
+                              Object {
+                                "id": "hv",
+                                "name": "Step before",
+                              },
+                              Object {
+                                "id": "vh",
+                                "name": "Step after",
+                              },
+                            ],
+                          },
+                        },
+                        Object {
+                          "component": [Function],
+                          "defaultState": 2,
+                          "eleType": "slider",
+                          "mapTo": "lineWidth",
+                          "name": "Line width",
+                          "props": Object {
+                            "max": 10,
+                          },
+                        },
+                        Object {
+                          "component": [Function],
+                          "defaultState": 40,
+                          "eleType": "slider",
+                          "mapTo": "fillOpacity",
+                          "name": "Fill Opacity",
+                          "props": Object {
+                            "max": 100,
+                          },
+                        },
+                        Object {
+                          "component": [Function],
+                          "defaultState": 5,
+                          "eleType": "slider",
+                          "mapTo": "pointSize",
+                          "name": "Point Size",
+                          "props": Object {
+                            "max": 40,
                           },
                         },
                       ],
@@ -1478,36 +1718,156 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                       },
                       Object {
                         "editor": [Function],
-                        "id": "chart_options",
-                        "mapTo": "chartOptions",
-                        "name": "Chart options",
+                        "id": "legend",
+                        "mapTo": "legend",
+                        "name": "Legend",
                         "schemas": Array [
                           Object {
                             "component": null,
-                            "isSingleSelection": true,
-                            "mapTo": "mode",
+                            "mapTo": "showLegend",
+                            "name": "Show Legend",
+                            "props": Object {
+                              "defaultSelections": Array [
+                                Object {
+                                  "id": "show",
+                                  "name": "Show",
+                                },
+                              ],
+                              "options": Array [
+                                Object {
+                                  "id": "show",
+                                  "name": "Show",
+                                },
+                                Object {
+                                  "id": "hidden",
+                                  "name": "Hidden",
+                                },
+                              ],
+                            },
+                          },
+                          Object {
+                            "component": null,
+                            "mapTo": "position",
+                            "name": "Position",
+                            "props": Object {
+                              "defaultSelections": Array [
+                                Object {
+                                  "id": "v",
+                                  "name": "Right",
+                                },
+                              ],
+                              "options": Array [
+                                Object {
+                                  "id": "v",
+                                  "name": "Right",
+                                },
+                                Object {
+                                  "id": "h",
+                                  "name": "Bottom",
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                      Object {
+                        "editor": [Function],
+                        "id": "chart_styles",
+                        "mapTo": "chartStyles",
+                        "name": "Chart styles",
+                        "schemas": Array [
+                          Object {
+                            "component": [Function],
+                            "eleType": "buttons",
+                            "mapTo": "style",
                             "name": "Mode",
                             "props": Object {
                               "defaultSelections": Array [
                                 Object {
-                                  "modeId": "lines",
+                                  "id": "lines",
                                   "name": "Lines",
                                 },
                               ],
-                              "dropdownList": Array [
+                              "options": Array [
                                 Object {
-                                  "modeId": "markers",
-                                  "name": "Markers",
-                                },
-                                Object {
-                                  "modeId": "lines",
+                                  "id": "lines",
                                   "name": "Lines",
                                 },
                                 Object {
-                                  "modeId": "lines+markers",
-                                  "name": "Lines + Markers",
+                                  "id": "bar",
+                                  "name": "Bars",
+                                },
+                                Object {
+                                  "id": "markers",
+                                  "name": "Points",
+                                },
+                                Object {
+                                  "id": "lines+markers",
+                                  "name": "Lines + Points",
                                 },
                               ],
+                            },
+                          },
+                          Object {
+                            "component": [Function],
+                            "eleType": "buttons",
+                            "mapTo": "interpolation",
+                            "name": "Interpolation",
+                            "props": Object {
+                              "defaultSelections": Array [
+                                Object {
+                                  "id": "spline",
+                                  "name": "Smooth",
+                                },
+                              ],
+                              "options": Array [
+                                Object {
+                                  "id": "linear",
+                                  "name": "Linear",
+                                },
+                                Object {
+                                  "id": "spline",
+                                  "name": "Smooth",
+                                },
+                                Object {
+                                  "id": "hv",
+                                  "name": "Step before",
+                                },
+                                Object {
+                                  "id": "vh",
+                                  "name": "Step after",
+                                },
+                              ],
+                            },
+                          },
+                          Object {
+                            "component": [Function],
+                            "defaultState": 2,
+                            "eleType": "slider",
+                            "mapTo": "lineWidth",
+                            "name": "Line width",
+                            "props": Object {
+                              "max": 10,
+                            },
+                          },
+                          Object {
+                            "component": [Function],
+                            "defaultState": 40,
+                            "eleType": "slider",
+                            "mapTo": "fillOpacity",
+                            "name": "Fill Opacity",
+                            "props": Object {
+                              "max": 100,
+                            },
+                          },
+                          Object {
+                            "component": [Function],
+                            "defaultState": 5,
+                            "eleType": "slider",
+                            "mapTo": "pointSize",
+                            "name": "Point Size",
+                            "props": Object {
+                              "max": 40,
                             },
                           },
                         ],
@@ -1621,9 +1981,19 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
           data={
             Array [
               Object {
-                "mode": "line",
+                "fill": "tozeroy",
+                "fillcolor": "rgba(60,161,199,0.2)",
+                "line": Object {
+                  "color": "#3CA1C7",
+                  "shape": "spline",
+                  "width": 2,
+                },
+                "marker": Object {
+                  "size": 5,
+                },
+                "mode": "lines",
                 "name": "avg(FlightDelayMin)",
-                "type": "line",
+                "type": "scatter",
                 "x": Array [
                   "BeatsWest",
                   "Logstash Airways",
@@ -1700,9 +2070,19 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
             data={
               Array [
                 Object {
-                  "mode": "line",
+                  "fill": "tozeroy",
+                  "fillcolor": "rgba(60,161,199,0.2)",
+                  "line": Object {
+                    "color": "#3CA1C7",
+                    "shape": "spline",
+                    "width": 2,
+                  },
+                  "marker": Object {
+                    "size": 5,
+                  },
+                  "mode": "lines",
                   "name": "avg(FlightDelayMin)",
-                  "type": "line",
+                  "type": "scatter",
                   "x": Array [
                     "BeatsWest",
                     "Logstash Airways",

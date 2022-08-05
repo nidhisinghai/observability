@@ -90,7 +90,9 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
       const { xaxis, yaxis } = data.defaultAxes;
       setConfigList({
         dimensions: [...(xaxis && xaxis)],
-        metrics: [...(yaxis && yaxis.map((item, i) => ({ ...item, side: i === 0 ? 'left' : 'right' })))],
+        metrics: [
+          ...(yaxis && yaxis.map((item, i) => ({ ...item, side: i === 0 ? 'left' : 'right' }))),
+        ],
       });
     } else if (visualizations.vis.name === visChartTypes.HeatMap) {
       setConfigList({
@@ -100,6 +102,11 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
     } else if (visualizations.vis.name === visChartTypes.Histogram) {
       setConfigList({
         dimensions: [{ bucketSize: '', bucketOffset: '' }],
+      });
+    } else {
+      setConfigList({
+        dimensions: [initialConfigEntry],
+        metrics: [initialConfigEntry],
       });
     }
   }, [
@@ -128,7 +135,6 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
       ],
     };
     setConfigList(updatedList);
-    updateChart(updatedList);
   };
 
   const updateHistogramConfig = (configName: string, fieldName: string, value: string) => {
@@ -160,7 +166,6 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
       [type]: [listItem],
     };
     setConfigList(updatedList);
-    updateChart(updatedList);
   };
 
   const handleServiceRemove = (index: number, name: string) => {
@@ -169,7 +174,6 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
     arr.splice(index, 1);
     const updatedList = { ...list, [name]: arr };
     setConfigList(updatedList);
-    updateChart(updatedList);
   };
 
   const handleServiceAdd = (name: string) => {
@@ -177,7 +181,7 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
     setConfigList(updatedList);
   };
 
-  const updateChart = (updatedConfigList = configList) => {
+  const updateChart = () => {
     dispatch(
       renderExplorerVis({
         tabId,
@@ -185,8 +189,8 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
           ...explorerVisualizations,
           [visualizations.vis.name]: {
             dataConfig: {
-              metrics: updatedConfigList.metrics,
-              dimensions: updatedConfigList.dimensions,
+              metrics: configList.metrics,
+              dimensions: configList.dimensions,
             },
           },
         },
@@ -206,8 +210,8 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
     return sectionName === 'metrics'
       ? unselectedFields
       : visualizations.vis.name === visChartTypes.Line
-        ? unselectedFields.filter((i) => i.type === 'timestamp')
-        : unselectedFields;
+      ? unselectedFields.filter((i) => i.type === 'timestamp')
+      : unselectedFields;
   };
 
   const getCommonUI = (lists, sectionName: string) =>
@@ -294,7 +298,9 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
                     iconType="plusInCircleFilled"
                     color="primary"
                     onClick={() => handleServiceAdd(sectionName)}
-                    disabled={sectionName === "dimensions" && visualizations.vis.name === visChartTypes.Line}
+                    disabled={
+                      sectionName === 'dimensions' && visualizations.vis.name === visChartTypes.Line
+                    }
                   >
                     Add
                   </EuiButton>
@@ -315,8 +321,8 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
         placeholder="auto"
         value={
           configList?.dimensions &&
-            configList?.dimensions.length > 0 &&
-            configList.dimensions[0][type]
+          configList?.dimensions.length > 0 &&
+          configList.dimensions[0][type]
             ? configList.dimensions[0][type]
             : ''
         }
@@ -408,19 +414,19 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
       <EuiSpacer size="s" />
       {visualizations.vis.name !== visChartTypes.Histogram &&
         visualizations.vis.name !== visChartTypes.CoordinateMap && (
-        <>
-          <EuiTitle size="xxs">
-            <h3>Dimensions</h3>
-          </EuiTitle>
-          {getCommonUI(configList.dimensions, 'dimensions')}
+          <>
+            <EuiTitle size="xxs">
+              <h3>Dimensions</h3>
+            </EuiTitle>
+            {getCommonUI(configList.dimensions, 'dimensions')}
 
-          <EuiSpacer size="s" />
-          <EuiTitle size="xxs">
-            <h3>Metrics</h3>
-          </EuiTitle>
-          {getCommonUI(configList.metrics, 'metrics')}
-        </>
-      )}
+            <EuiSpacer size="s" />
+            <EuiTitle size="xxs">
+              <h3>Metrics</h3>
+            </EuiTitle>
+            {getCommonUI(configList.metrics, 'metrics')}
+          </>
+        )}
       {visualizations.vis.name === visChartTypes.Histogram && (
         <>
           <EuiTitle size="xxs">
@@ -438,7 +444,13 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
       {visualizations.vis.name === visChartTypes.CoordinateMap && (
         <>
           <EuiTitle size="xxs">
-            <h3>Mertics</h3>
+            <h3>Dimensions</h3>
+          </EuiTitle>
+          {getSingleBlock('dimensions', 'geo_point')}
+          <EuiSpacer size="s" />
+
+          <EuiTitle size="xxs">
+            <h3>Metrics</h3>
           </EuiTitle>
           {getSingleBlock('metrics', 'number')}
           <EuiFormRow label="Plot Label">
@@ -460,21 +472,14 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
             />
           </EuiFormRow>
           <EuiSpacer size="s" />
-          <EuiTitle size="xxs">
-            <h3>Dimensions</h3>
-          </EuiTitle>
-          {getSingleBlock('dimensions', 'geo_point')}
-
-          <EuiSpacer size="s" />
         </>
       )}
       <EuiFlexItem grow={false}>
         <EuiButton
           data-test-subj="visualizeEditorRenderButton"
           iconType="play"
-          onClick={() => updateChart()}
+          onClick={updateChart}
           size="s"
-          disabled
         >
           Update chart
         </EuiButton>

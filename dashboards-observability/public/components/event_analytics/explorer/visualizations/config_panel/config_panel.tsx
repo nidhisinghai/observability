@@ -31,6 +31,8 @@ import {
   visChartTypes,
 } from '../../../../../../common/constants/shared';
 import { VIZ_CONTAIN_XY_AXIS } from '../../../../../../common/constants/explorer';
+import { getVisTypeData } from '../../../../custom_panels/helpers/utils';
+
 
 const CONFIG_LAYOUT_TEMPLATE = `
 {
@@ -81,10 +83,10 @@ export const ConfigPanel = ({
     let chartBasedAxes: ValueOptionsAxes = {};
     const [valueField] = data.defaultAxes?.yaxis ?? [];
     if (curVisId === visChartTypes.TreeMap) {
-      chartBasedAxes['childField'] = data.defaultAxes.xaxis ?? [];
-      chartBasedAxes['valueField'] = valueField && [valueField];
+      chartBasedAxes["childField"] = data.defaultAxes.xaxis ?? [];
+      chartBasedAxes["valueField"] = valueField && [valueField];
     } else if (curVisId === visChartTypes.HeatMap) {
-      chartBasedAxes['zaxis'] = valueField && [valueField];
+      chartBasedAxes["zaxis"] = valueField && [valueField];
     } else {
       chartBasedAxes = { ...data.defaultAxes };
     }
@@ -147,7 +149,8 @@ export const ConfigPanel = ({
       pie: isValidValueOptionsXYAxes,
       scatter: isValidValueOptionsXYAxes,
       logs_view: true,
-    };
+      horizontal_bar: isValidValueOptionsXYAxes,
+    }
     return isValid_valueOptions[curVisId];
   }, [vizConfigs.dataConfig]);
 
@@ -244,15 +247,9 @@ export const ConfigPanel = ({
     );
   };
 
-  const memorizedVisualizationTypes = useMemo(
-    () =>
-      ENABLED_VIS_TYPES.map((vs: string) =>
-        vs === visChartTypes.Line || vs === visChartTypes.Scatter
-          ? getVisType(vs, { type: vs })
-          : getVisType(vs)
-      ),
-    []
-  );
+  const memorizedVisualizationTypes = useMemo(() =>
+    ENABLED_VIS_TYPES.map((vs: string) => getVisTypeData(vs))
+    , []);
 
   const vizSelectableItemRenderer = (option: EuiComboBoxOptionOption<any>) => {
     const { icontype = 'empty', label = '' } = option;
@@ -277,10 +274,6 @@ export const ConfigPanel = ({
     [memorizedVisualizationTypes]
   );
 
-  const vizTypeList = useMemo(() => {
-    return memorizedVisualizationTypes.filter((type) => type.id !== 'horizontal_bar');
-  }, [memorizedVisualizationTypes]);
-
   return (
     <>
       <EuiFlexGroup
@@ -295,7 +288,7 @@ export const ConfigPanel = ({
           <EuiComboBox
             aria-label="config chart selector"
             placeholder="Select a chart"
-            options={vizTypeList}
+            options={memorizedVisualizationTypes}
             selectedOptions={[getSelectedVisDById(curVisId)]}
             singleSelection
             onChange={(visType) => {

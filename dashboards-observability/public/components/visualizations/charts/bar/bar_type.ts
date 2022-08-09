@@ -16,7 +16,7 @@ import {
   ConfigLegend,
   InputFieldItem,
 } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
-import { DefaultChartStyles } from '../../../../../common/constants/shared';
+import { DefaultChartStyles, visChartTypes } from '../../../../../common/constants/shared';
 
 import { ConfigColorTheme } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_color_theme';
 const sharedConfigs = getPlotlySharedConfigs();
@@ -24,20 +24,20 @@ const VIS_CATEGORY = getPlotlyCategory();
 
 const { LegendPosition, ShowLegend } = DefaultChartStyles;
 export const createBarTypeDefinition = (params: any) => ({
-  name: 'bar',
+  name: params.type ? params.type : 'bar',
   type: 'bar',
-  id: 'bar',
-  label: 'Vertical bar',
-  fulllabel: 'Vertical bar',
-  icontype: 'visBarVerticalStacked',
+  id: params.type ? params.type : 'bar',
+  label: params.type === visChartTypes.HorizontalBar ? 'Horizontal Bar' : 'Vertical bar',
+  fullLabel: params.type === visChartTypes.HorizontalBar ? 'Horizontal Bar' : 'Vertical bar',
+  iconType: 'visBarVerticalStacked',
   selection: {
     dataLoss: 'nothing',
   },
   category: VIS_CATEGORY.BASICS,
   icon: LensIconChartBar,
-  categoryaxis: 'xaxis',
-  seriesaxis: 'yaxis',
-  orientation: 'v',
+  categoryAxis: 'xaxis',
+  seriesAxis: 'yaxis',
+  orientation: params.type === visChartTypes.HorizontalBar ? 'h' : 'v',
   mode: 'group',
   labelangle: 0,
   linewidth: 1,
@@ -93,19 +93,6 @@ export const createBarTypeDefinition = (params: any) => ({
             editor: ConfigBarChartStyles,
             mapTo: 'chartStyles',
             schemas: [
-              {
-                name: 'Orientation',
-                component: ButtonGroupItem,
-                mapTo: 'orientation',
-                eleType: 'buttons',
-                props: {
-                  options: [
-                    { name: 'Vertical', id: 'v' },
-                    { name: 'Horizontal', id: 'h' },
-                  ],
-                  defaultSelections: [{ name: 'Vertical', id: 'v' }],
-                },
-              },
               {
                 name: 'Mode',
                 component: ButtonGroupItem,

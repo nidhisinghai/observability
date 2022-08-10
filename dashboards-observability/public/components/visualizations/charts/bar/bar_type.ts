@@ -23,13 +23,15 @@ const sharedConfigs = getPlotlySharedConfigs();
 const VIS_CATEGORY = getPlotlyCategory();
 
 const { LegendPosition, ShowLegend } = DefaultChartStyles;
+const isHorizontalBar = (paramstype: string) => paramstype === visChartTypes.HorizontalBar ? true : false;
+
 export const createBarTypeDefinition = (params: any) => ({
   name: params.type ? params.type : 'bar',
   type: 'bar',
   id: params.type ? params.type : 'bar',
-  label: params.type === visChartTypes.HorizontalBar ? 'Horizontal Bar' : 'Vertical bar',
-  fullLabel: params.type === visChartTypes.HorizontalBar ? 'Horizontal Bar' : 'Vertical bar',
-  iconType: 'visBarVerticalStacked',
+  label: isHorizontalBar(params.type) ? 'Horizontal Bar' : 'Vertical bar',
+  fullLabel: isHorizontalBar(params.type) ? 'Horizontal Bar' : 'Vertical bar',
+  icontype: isHorizontalBar(params.type) ? 'visBarHorizontalStacked' : 'visBarVerticalStacked',
   selection: {
     dataLoss: 'nothing',
   },
@@ -37,7 +39,7 @@ export const createBarTypeDefinition = (params: any) => ({
   icon: LensIconChartBar,
   categoryAxis: 'xaxis',
   seriesAxis: 'yaxis',
-  orientation: params.type === visChartTypes.HorizontalBar ? 'h' : 'v',
+  orientation: isHorizontalBar(params.type) ? 'h' : 'v',
   mode: 'group',
   labelangle: 0,
   linewidth: 1,

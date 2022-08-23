@@ -2839,6 +2839,280 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                     },
                   },
                 },
+                Object {
+                  "boxgap": 0.3,
+                  "boxmode": "overlay",
+                  "category": "Visualizations",
+                  "categoryaxis": "xaxis",
+                  "component": [Function],
+                  "editorconfig": Object {
+                    "panelTabs": Array [
+                      Object {
+                        "editor": [Function],
+                        "id": "data-panel",
+                        "mapTo": "dataConfig",
+                        "name": "Data",
+                        "sections": Array [
+                          Object {
+                            "editor": [Function],
+                            "id": "legend",
+                            "mapTo": "legend",
+                            "name": "Legend",
+                            "schemas": Array [
+                              Object {
+                                "component": null,
+                                "mapTo": "showLegend",
+                                "name": "Show Legend",
+                                "props": Object {
+                                  "defaultSelections": Array [
+                                    Object {
+                                      "id": "show",
+                                      "name": "Show",
+                                    },
+                                  ],
+                                  "options": Array [
+                                    Object {
+                                      "id": "show",
+                                      "name": "Show",
+                                    },
+                                    Object {
+                                      "id": "hidden",
+                                      "name": "Hidden",
+                                    },
+                                  ],
+                                },
+                              },
+                              Object {
+                                "component": null,
+                                "mapTo": "position",
+                                "name": "Position",
+                                "props": Object {
+                                  "defaultSelections": Array [
+                                    Object {
+                                      "id": "v",
+                                      "name": "Right",
+                                    },
+                                  ],
+                                  "options": Array [
+                                    Object {
+                                      "id": "v",
+                                      "name": "Right",
+                                    },
+                                    Object {
+                                      "id": "h",
+                                      "name": "Bottom",
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                          Object {
+                            "editor": [Function],
+                            "id": "chart_styles",
+                            "mapTo": "chartStyles",
+                            "name": "Chart styles",
+                            "schemas": Array [
+                              Object {
+                                "component": [Function],
+                                "eleType": "buttons",
+                                "mapTo": "orientation",
+                                "name": "Orientation",
+                                "props": Object {
+                                  "defaultSelections": Array [
+                                    Object {
+                                      "id": "v",
+                                      "name": "Vertical",
+                                    },
+                                  ],
+                                  "options": Array [
+                                    Object {
+                                      "id": "v",
+                                      "name": "Vertical",
+                                    },
+                                    Object {
+                                      "id": "h",
+                                      "name": "Horizontal",
+                                    },
+                                  ],
+                                },
+                              },
+                              Object {
+                                "component": [Function],
+                                "eleType": "buttons",
+                                "mapTo": "boxMode",
+                                "name": "Mode",
+                                "props": Object {
+                                  "defaultSelections": Array [
+                                    Object {
+                                      "id": "overlay",
+                                      "name": "Overlay",
+                                    },
+                                  ],
+                                  "options": Array [
+                                    Object {
+                                      "id": "overlay",
+                                      "name": "Overlay",
+                                    },
+                                    Object {
+                                      "id": "group",
+                                      "name": "Group",
+                                    },
+                                  ],
+                                },
+                              },
+                              Object {
+                                "component": [Function],
+                                "eleType": "input",
+                                "mapTo": "labelSize",
+                                "name": "Label Size",
+                              },
+                              Object {
+                                "component": [Function],
+                                "defaultState": 0,
+                                "eleType": "slider",
+                                "mapTo": "rotateBoxLabels",
+                                "name": "Rotate box labels",
+                                "props": Object {
+                                  "max": 90,
+                                  "min": -90,
+                                  "showTicks": true,
+                                  "ticks": Array [
+                                    Object {
+                                      "label": "-90°",
+                                      "value": -90,
+                                    },
+                                    Object {
+                                      "label": "-45°",
+                                      "value": -45,
+                                    },
+                                    Object {
+                                      "label": "0°",
+                                      "value": 0,
+                                    },
+                                    Object {
+                                      "label": "45°",
+                                      "value": 45,
+                                    },
+                                    Object {
+                                      "label": "90°",
+                                      "value": 90,
+                                    },
+                                  ],
+                                },
+                              },
+                              Object {
+                                "component": [Function],
+                                "defaultState": 0.3,
+                                "eleType": "slider",
+                                "mapTo": "boxGap",
+                                "name": "Box gap",
+                                "props": Object {
+                                  "max": 1,
+                                  "min": 0,
+                                  "step": 0.1,
+                                },
+                              },
+                              Object {
+                                "component": [Function],
+                                "defaultState": 5,
+                                "eleType": "slider",
+                                "mapTo": "markerSize",
+                                "name": "Marker size",
+                                "props": Object {
+                                  "max": 10,
+                                  "min": 1,
+                                },
+                              },
+                              Object {
+                                "component": [Function],
+                                "defaultState": 0.3,
+                                "eleType": "slider",
+                                "mapTo": "jitter",
+                                "name": "Jitter",
+                                "props": Object {
+                                  "max": 1,
+                                  "min": 0,
+                                  "step": 0.1,
+                                },
+                              },
+                              Object {
+                                "component": [Function],
+                                "defaultState": 40,
+                                "eleType": "slider",
+                                "mapTo": "fillOpacity",
+                                "name": "Fill Opacity",
+                                "props": Object {
+                                  "max": 100,
+                                },
+                              },
+                            ],
+                          },
+                          Object {
+                            "editor": [Function],
+                            "id": "color-theme",
+                            "mapTo": "colorTheme",
+                            "name": "Color Theme",
+                            "schemas": Array [],
+                          },
+                        ],
+                      },
+                      Object {
+                        "content": Array [],
+                        "editor": [Function],
+                        "id": "style-panel",
+                        "mapTo": "layoutConfig",
+                        "name": "Layout",
+                      },
+                      Object {
+                        "editor": [Function],
+                        "id": "availability-panel",
+                        "mapTo": "availabilityConfig",
+                        "name": "Availability",
+                      },
+                    ],
+                  },
+                  "fillopacity": 40,
+                  "fulllabel": "Box plot",
+                  "icon": [Function],
+                  "icontype": "visBarVerticalStacked",
+                  "id": "box_plot",
+                  "jitter": 0.3,
+                  "label": "Box plot",
+                  "labelangle": 0,
+                  "legendposition": "v",
+                  "markersize": 5,
+                  "name": "box",
+                  "orientation": "v",
+                  "selection": Object {
+                    "dataLoss": "nothing",
+                  },
+                  "seriesaxis": "yaxis",
+                  "showlegend": "show",
+                  "type": "box",
+                  "visconfig": Object {
+                    "config": Object {
+                      "displaylogo": false,
+                      "responsive": true,
+                    },
+                    "isUniColor": false,
+                    "layout": Object {
+                      "height": 1180,
+                      "legend": Object {
+                        "orientation": "v",
+                        "traceorder": "normal",
+                      },
+                      "margin": Object {
+                        "b": 30,
+                        "l": 60,
+                        "pad": 0,
+                        "r": 30,
+                        "t": 50,
+                      },
+                      "showlegend": true,
+                    },
+                  },
+                },
               ]
             }
             placeholder="Select a chart"

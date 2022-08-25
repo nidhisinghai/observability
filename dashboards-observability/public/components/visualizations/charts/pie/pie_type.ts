@@ -26,18 +26,18 @@ export const createPieTypeDefinition = (params: any) => ({
   type: 'pie',
   id: 'pie',
   label: 'Pie',
-  fullLabel: 'Pie',
-  iconType: 'visPie',
+  fulllabel: 'Pie',
+  icontype: 'visPie',
   category: VIS_CATEGORY.BASICS,
-  showLegend: true,
-  legendPosition: 'v',
+  showlegend: true,
+  legendposition: 'v',
   selection: {
     dataLoss: 'nothing',
   },
-  categoryAxis: 'xaxis',
-  seriesAxis: 'yaxis',
+  categoryaxis: 'xaxis',
+  seriesaxis: 'yaxis',
   icon: LensIconChartPie,
-  editorConfig: {
+  editorconfig: {
     panelTabs: [
       {
         id: 'data-panel',
@@ -52,7 +52,7 @@ export const createPieTypeDefinition = (params: any) => ({
             mapTo: 'legend',
             schemas: [
               {
-                name: 'Show Legend',
+                name: 'Show legend',
                 mapTo: 'showLegend',
                 component: null,
                 props: {
@@ -76,7 +76,7 @@ export const createPieTypeDefinition = (params: any) => ({
                 },
               },
               {
-                name: 'Legend Size',
+                name: 'Legend size',
                 component: InputFieldItem,
                 mapTo: 'size',
                 eleType: 'input',
@@ -85,7 +85,7 @@ export const createPieTypeDefinition = (params: any) => ({
           },
           {
             id: 'chart_styles',
-            name: 'Chart Styles',
+            name: 'Chart styles',
             editor: ConfigChartOptions,
             mapTo: 'chartStyles',
             schemas: [
@@ -103,13 +103,13 @@ export const createPieTypeDefinition = (params: any) => ({
                 defaultState: [{ name: 'Pie', modeId: 'pie', label: 'Pie' }],
               },
               {
-                name: 'Label Size',
+                name: 'Label size',
                 component: InputFieldItem,
                 mapTo: 'labelSize',
                 eleType: 'input',
               },
               {
-                name: 'Color Theme',
+                name: 'Color theme',
                 isSingleSelection: true,
                 component: ColorPalettePicker,
                 mapTo: 'colorTheme',
@@ -130,7 +130,7 @@ export const createPieTypeDefinition = (params: any) => ({
       },
     ],
   },
-  visConfig: {
+  visconfig: {
     layout: {
       ...sharedConfigs.layout,
       ...{

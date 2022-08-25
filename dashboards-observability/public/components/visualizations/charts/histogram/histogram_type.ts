@@ -12,7 +12,6 @@ import {
   ConfigLegend,
   SliderConfig,
   ConfigColorTheme,
-  ConfigThresholds,
 } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
 import { DefaultChartStyles } from '../../../../../common/constants/shared';
 
@@ -25,14 +24,14 @@ export const createHistogramVisDefinition = (params = {}) => ({
   type: 'histogram',
   id: 'histogram',
   label: 'Histogram',
-  fullLabel: 'Histogram',
+  fulllabel: 'Histogram',
   category: VIS_CATEGORY.BASICS,
   selection: {
     dataLoss: 'nothing',
   },
-  valueSeries: 'yaxis',
-  iconType: 'visArea',
-  editorConfig: {
+  valueseries: 'yaxis',
+  icontype: 'visArea',
+  editorconfig: {
     panelTabs: [
       {
         id: 'data-panel',
@@ -57,7 +56,7 @@ export const createHistogramVisDefinition = (params = {}) => ({
                 },
               },
               {
-                name: 'Fill Opacity',
+                name: 'Fill opacity',
                 component: SliderConfig,
                 mapTo: 'fillOpacity',
                 defaultState: FillOpacity,
@@ -70,7 +69,7 @@ export const createHistogramVisDefinition = (params = {}) => ({
           },
           {
             id: 'color-theme',
-            name: 'Color Theme',
+            name: 'Color theme',
             editor: ConfigColorTheme,
             mapTo: 'colorTheme',
             schemas: [],
@@ -82,7 +81,7 @@ export const createHistogramVisDefinition = (params = {}) => ({
             mapTo: 'legend',
             schemas: [
               {
-                name: 'Show Legend',
+                name: 'Show legend',
                 mapTo: 'showLegend',
                 component: null,
                 props: {
@@ -118,7 +117,7 @@ export const createHistogramVisDefinition = (params = {}) => ({
       },
     ],
   },
-  visConfig: {
+  visconfig: {
     layout: {
       ...sharedConfigs.layout,
     },

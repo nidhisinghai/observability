@@ -30,14 +30,14 @@ export const createMapsVisDefinition = () => ({
   type: 'heatmap',
   id: 'heatmap',
   label: 'Heatmap',
-  fullLabel: 'Hubble',
-  iconType: 'heatmap',
+  fulllabel: 'Hubble',
+  icontype: 'heatmap',
   category: VIS_CATEGORY.BASICS,
   selection: {
     dataLoss: 'nothing',
   },
   icon: LensIconChartPie,
-  editorConfig: {
+  editorconfig: {
     panelTabs: [
       {
         id: 'data-panel',
@@ -52,7 +52,7 @@ export const createMapsVisDefinition = () => ({
             mapTo: 'legend',
             schemas: [
               {
-                name: 'Show Colorscale',
+                name: 'Show colorscale',
                 mapTo: 'showLegend',
                 component: null,
                 props: {
@@ -67,12 +67,12 @@ export const createMapsVisDefinition = () => ({
           },
           {
             id: 'chart_styles',
-            name: 'Chart Styles',
+            name: 'Chart styles',
             editor: ConfigChartOptions,
             mapTo: 'chartStyles',
             schemas: [
               {
-                name: 'Color Mode',
+                name: 'Color mode',
                 component: PanelItem,
                 mapTo: 'colorMode',
                 eleType: 'list',
@@ -114,7 +114,7 @@ export const createMapsVisDefinition = () => ({
       },
     ],
   },
-  visConfig: {
+  visconfig: {
     layout: {
       ...sharedConfigs.layout,
       ...{

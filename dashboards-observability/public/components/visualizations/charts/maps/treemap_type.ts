@@ -29,19 +29,19 @@ export const createTreeMapDefinition = (params: BarTypeParams = {}) => ({
   name: 'tree_map',
   type: 'tree_map',
   id: 'tree_map',
-  label: 'Tree Map',
-  fullLabel: 'Tree Map',
+  label: 'Tree map',
+  fulllabel: 'Tree map',
   selection: {
     dataLoss: 'nothing',
   },
   category: VIS_CATEGORY.BASICS,
-  iconType: 'heatmap',
+  icontype: 'heatmap',
   icon: LensIconChartBar,
-  categoryAxis: 'xaxis',
-  seriesAxis: 'yaxis',
+  categoryaxis: 'xaxis',
+  seriesaxis: 'yaxis',
   orientation: 'v',
   component: TreeMap,
-  editorConfig: {
+  editorconfig: {
     panelTabs: [
       {
         id: 'data-panel',
@@ -56,7 +56,7 @@ export const createTreeMapDefinition = (params: BarTypeParams = {}) => ({
             mapTo: 'legend',
             schemas: [
               {
-                name: 'Show Colorscale',
+                name: 'Show colorscale',
                 mapTo: 'showLegend',
                 component: null,
                 props: {
@@ -76,7 +76,7 @@ export const createTreeMapDefinition = (params: BarTypeParams = {}) => ({
             mapTo: 'treemapOptions',
             schemas: [
               {
-                name: 'Tiling Algorithm',
+                name: 'Tiling algorithm',
                 isSingleSelection: true,
                 component: null,
                 mapTo: 'tilingAlgorithm',
@@ -110,12 +110,12 @@ export const createTreeMapDefinition = (params: BarTypeParams = {}) => ({
           },
           {
             id: 'chart_styles',
-            name: 'Chart Styles',
+            name: 'Chart styles',
             editor: ConfigChartOptions,
             mapTo: 'chartStyles',
             schemas: [
               {
-                name: 'Color Theme',
+                name: 'Color theme',
                 isSingleSelection: true,
                 component: ColorPalettePicker,
                 mapTo: 'colorTheme',
@@ -136,7 +136,7 @@ export const createTreeMapDefinition = (params: BarTypeParams = {}) => ({
       },
     ],
   },
-  visConfig: {
+  visconfig: {
     layout: {
       ...sharedConfigs.layout,
     },

@@ -23,15 +23,13 @@ export const HeatMap = ({ visualizations, layout, config }: any) => {
     data,
     metadata: { fields },
   } = visualizations.data.rawVizData;
-  const { defaultAxes } = visualizations.data;
   const { dataConfig = {}, layoutConfig = {} } = visualizations?.data?.userConfigs;
-  const yaxis = defaultAxes.yaxis ?? [];
 
-  if (fields.length < 3) return <EmptyPlaceholder icon={visualizations?.vis?.iconType} />;
+  if (fields.length < 3) return <EmptyPlaceholder icon={visualizations?.vis?.icontype} />;
 
-  const xaxisField = visualizations.data?.rawVizData?.heatmap?.dataConfig?.dimensions[0];
-  const yaxisField = visualizations.data?.rawVizData?.heatmap?.dataConfig?.dimensions[1];
-  const zMetrics = visualizations.data?.rawVizData?.heatmap?.dataConfig?.metrics[0];
+  const xaxisField = dataConfig?.valueOptions?.dimensions[0];
+  const yaxisField = dataConfig?.valueOptions?.dimensions[1];
+  const zMetrics = dataConfig?.valueOptions?.metrics[0];
 
   if (
     isEmpty(xaxisField) ||
@@ -42,7 +40,7 @@ export const HeatMap = ({ visualizations, layout, config }: any) => {
     isEmpty(data[zMetrics.label]) ||
     indexOf(NUMERICAL_FIELDS, zMetrics.type) < 0
   )
-    return <EmptyPlaceholder icon={visualizations?.vis?.iconType} />;
+    return <EmptyPlaceholder icon={visualizations?.vis?.icontype} />;
 
   const uniqueYaxis = uniq(data[yaxisField.label]);
   const uniqueXaxis = uniq(data[xaxisField.label]);
@@ -124,10 +122,11 @@ export const HeatMap = ({ visualizations, layout, config }: any) => {
     title: dataConfig?.panelOptions?.title || layoutConfig.layout?.title || '',
   };
 
-  const mergedConfigs = {
+
+  const mergedConfigs = useMemo(() => ({
     ...config,
     ...(layoutConfig.config && layoutConfig.config),
-  };
+  }), [config, layoutConfig.config]);
 
   return <Plt data={heapMapData} layout={mergedLayout} config={mergedConfigs} />;
 };

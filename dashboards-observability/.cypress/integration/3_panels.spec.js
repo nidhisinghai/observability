@@ -37,6 +37,39 @@ const moveToTestPanel = () => {
   cy.get('h1').contains(TEST_PANEL).should('exist');
   cy.wait(delay);
 };
+let panelCount = 1;
+const panelName = 'TestPanel';
+const createDummyPanel = () => {
+  moveToPanelHome();
+  cy.get('.euiButton__text').contains('Create panel').trigger('mouseover').click();
+  cy.wait(delay);
+  cy.get('input.euiFieldText').focus().type(panelName+panelCount);
+  cy.get('.euiButton__text')
+    .contains(/^Create$/)
+    .trigger('mouseover')
+    .click();
+  cy.wait(delay);
+  cy.contains(panelName).should('exist');
+  cy.get('.euiBreadcrumb').contains('Operational panels').trigger('mouseover').click();
+  cy.wait(delay);
+  panelCount++;
+};
+
+const deletePanel = () => {
+  cy.get('.euiCheckbox__input[data-test-subj="checkboxSelectAll"]').trigger('mouseover').click();
+    cy.wait(delay);
+    cy.get('.euiButton__text').contains('Actions').trigger('mouseover').click();
+    cy.wait(delay);
+    cy.get('.euiContextMenuItem__text').contains('Delete').trigger('mouseover').click();
+    cy.wait(delay);
+
+    cy.get('button.euiButton--danger').should('be.disabled');
+
+    cy.get('input.euiFieldText[placeholder="delete"]').focus().type('delete', {
+    });
+    cy.get('button.euiButton--danger').should('not.be.disabled');
+    cy.get('.euiButton__text').contains('Delete').trigger('mouseover').click();
+};
 
 describe('Adding sample data and visualization', () => {
   it('Adds sample flights data for visualization paragraph', () => {
@@ -97,6 +130,15 @@ describe('Creating visualizations', () => {
   });
 });
 
+describe('Testing Operational Panel Home', () => {
+   beforeEach(() => moveToPanelHome());
+
+   it('Operational Panels Empty Home Page', () => {
+     cy.get('.euiTitle.euiTitle--small').contains('Panels (0)');
+     cy.get('.euiTextAlign').contains('No Operational Panels').should('exist');
+   });
+});
+
 describe('Testing panels table', () => {
   beforeEach(() => {
     moveToPanelHome();
@@ -127,6 +169,12 @@ describe('Testing panels table', () => {
     cy.wait(delay);
 
     cy.contains(TEST_PANEL).should('exist');
+  });
+
+  it('Edit Button is Disabled when visualization is not added to Panel', () => {
+    moveToTestPanel();
+    cy.get('.euiTextAlign').contains('Start by adding your first visualization').should('exist');
+    cy.get('button.euiButton-isDisabled').should('be.disabled');
   });
 
   it('Duplicates and renames a panel', () => {
@@ -390,7 +438,8 @@ describe('Testing a panel', () => {
   });
 
   it('Delete a visualization', () => {
-    cy.get('h5').contains(PPL_VISUALIZATIONS_NAMES[1]).should('exist');
+    moveToTestPanel();
+    cy.get('h5').contains(PPL_VISUALIZATIONS_NAMES[0]).should('exist');
     cy.get('.euiButton__text').contains('Edit').trigger('mouseover').click();
     cy.wait(delay);
     cy.get('.visualization-action-button > .euiIcon').eq(1).trigger('mouseover').click();
@@ -543,3 +592,31 @@ describe('Clean up all test data', () => {
   });
 });
 
+describe('Verify Operational Panels Table', () => {
+  it('Add Dummy Data to Operational Panel and verify Table Column, Pagination and Rows Data ', () => {
+    for (let p = 0; p < 15 ; p++) {
+      createDummyPanel();
+    }
+  cy.get('.euiTableCellContent__text').contains('Name').should('exist');
+  cy.get('.euiTableCellContent__text').contains('Last updated').should('exist');
+  cy.get('.euiTableCellContent__text').contains('Created').should('exist');
+  moveToPanelHome();
+  cy.get('[data-test-subj="pagination-button-next"]').click();
+  cy.get('.euiTableCellContent--truncateText').contains('TestPanel1').should('exist');
+  cy.get('[data-test-subj="pagination-button-previous"]').click();
+  cy.wait(delay);
+  cy.get('.euiTableCellContent--truncateText').contains('TestPanel12').should('exist');
+  cy.get('.euiButtonEmpty__text').contains('Rows per page').click();
+  cy.get('.euiContextMenuItem__text').contains('8 rows').click();
+  let expected_row_count = 8;
+  cy.get('.euiTable--auto')
+  .find("tr")
+  .then((row) => {
+    let total = row.length-1;
+    expect(total).to.equal(expected_row_count);
+  })
+  for (let y = 0; y < 2; y++){
+    deletePanel();
+  }
+});
+});
